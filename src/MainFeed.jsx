@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Box, Text } from '@chakra-ui/react';
+import { Flex, Box, Text, Heading } from '@chakra-ui/react';
 
 export const MainFeed = () => {
   return (
@@ -12,8 +12,10 @@ export const MainFeed = () => {
       minHeight={{ base: '20em', lg: '30em' }}
       p={'10'}
       marginTop={{ base: '4', lg: '4' }}
-      borderRadius={'2px'}
+      borderRadius={'4px'}
       backgroundColor={'white'}
-    ></Box>
+    >
+      <Heading>{}</Heading>
+    </Box>
   );
 };

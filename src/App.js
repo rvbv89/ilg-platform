@@ -1,4 +1,5 @@
 import React from 'react';
+import '@fontsource/barlow';
 import {
   ChakraProvider,
   Box,
@@ -7,9 +8,9 @@ import {
   VStack,
   Code,
   Grid,
-  theme,
   GridItem,
 } from '@chakra-ui/react';
+import theme from './theme';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
 import { Navbar } from './Navbar';
@@ -22,7 +23,13 @@ function App() {
     <ChakraProvider theme={theme}>
       <Box margin={0} minWidth="max-content" textAlign="center" fontSize="xl">
         <Navbar />
-        <Grid templateColumns="repeat(4, 1fr)" minH="100vh" margin={1} p={4} gap={4}>
+        <Grid
+          templateColumns="repeat(4, 1fr)"
+          minH="100vh"
+          margin={1}
+          p={4}
+          gap={4}
+        >
           <GridItem>
             <PostSidebar />
           </GridItem>
