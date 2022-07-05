@@ -1,6 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
+import usersReducer from './usersSlice';
+import postsReducer from './postsSlice'
 
 export default configureStore({
-    reducer: {},
-    
-})
+  reducer: {
+    users: usersReducer,
+    posts: postsReducer,
+    //comments obj
+  },
+});
+
+

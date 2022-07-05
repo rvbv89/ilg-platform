@@ -12,7 +12,7 @@ import {
 export const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
   return (
-    <Box>
+    <Box position='sticky'>
       <Flex minWidth="max-content" alignItems="center" gap="2" padding='2' borderBottom='1px' borderColor='lightgrey'>
         <Heading size="md">ilgit</Heading>
         <Spacer />

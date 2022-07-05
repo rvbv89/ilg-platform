@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = [];
+
 export const postsSlice = createSlice({
   name: 'posts',
-  initialState: [],
+  initialState, 
   reducers: {
     addPost: (state, action) => {
       //add supabase query or realtime listener

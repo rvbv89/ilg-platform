@@ -21,15 +21,15 @@ import { SocialSidebar } from './SocialSidebar';
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box margin={0} minWidth="max-content" textAlign="center" fontSize="xl">
+      <Box
+        margin={0}
+        minWidth="max-content"
+        maxHeight="100%"
+        textAlign="center"
+        fontSize="xl"
+      >
         <Navbar />
-        <Grid
-          templateColumns="repeat(4, 1fr)"
-          minH="100vh"
-          margin={1}
-          p={4}
-          gap={4}
-        >
+        <Grid templateColumns="repeat(4, 1fr)" margin={0} p={4} gap={4}>
           <GridItem>
             <PostSidebar />
           </GridItem>
