@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '@fontsource/barlow';
 import {
   ChakraProvider,
@@ -9,6 +9,7 @@ import {
   Code,
   Grid,
   GridItem,
+  useDisclosure,
 } from '@chakra-ui/react';
 import theme from './theme';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
@@ -17,8 +18,12 @@ import { Navbar } from './Navbar';
 import { MainFeed } from './MainFeed';
 import { PostSidebar } from './PostSidebar';
 import { SocialSidebar } from './SocialSidebar';
+import { AuthModal } from './AuthModal';
+import { useModal } from './context/ModalProvider'
 
 function App() {
+  const { modal } = useModal();
+
   return (
     <ChakraProvider theme={theme}>
       <Box
@@ -28,7 +33,8 @@ function App() {
         textAlign="center"
         fontSize="xl"
       >
-        <Navbar />
+        <AuthModal isOpen={modal.isModalOpen()} onClose={modal.closeModal()} />
+        <Navbar onOpen={modal.openModal()} />
         <Grid templateColumns="repeat(4, 1fr)" margin={0} p={4} gap={4}>
           <GridItem>
             <PostSidebar />

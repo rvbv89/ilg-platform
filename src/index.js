@@ -6,6 +6,7 @@ import store from './redux/store'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
+import ModalProvider from './context/ModalProvider'
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -14,7 +15,9 @@ root.render(
   <StrictMode>
     <ColorModeScript />
     <Provider store={store}>
+      <ModalProvider>
       <App />
+      </ModalProvider>
     </Provider>
   </StrictMode>
 );
