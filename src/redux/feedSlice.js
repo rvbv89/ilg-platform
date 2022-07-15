@@ -1,9 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+currentFeed: {feedId: "main"}
+}
+
 export const postsSlice = createSlice({
   name: 'posts',
-  initialState: [],
+  initialState,
   reducers: {
+    currentFeed: (state, action) => {
+      return {...state, currentFeed: {...action.payload}}
+    },
     addPost: (state, action) => {
       //add supabase query or realtime listener
     },
@@ -13,6 +20,6 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { addPost, deletePost } = postsSlice.actions;
+export const { currentFeed, addPost, deletePost } = postsSlice.actions;
 
 export default postsSlice.reducer;

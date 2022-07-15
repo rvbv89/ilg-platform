@@ -21,29 +21,34 @@ import { MainFeed } from './MainFeed';
 import { PostSidebar } from './PostSidebar';
 import { SocialSidebar } from './SocialSidebar';
 import { AuthModal } from './AuthModal';
-import { AppNoAuth } from './AppNoAuth';
-import { AppAuth } from './AppAuth';
-import { Register } from './Register';
 
-function App() {
+export const AppNoAuth = () => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
-
   return (
     <ChakraProvider theme={theme}>
-      <Routes>
-        <Route exact path="/" element={<AppNoAuth />} />
-        <Route path="register" element={<Register/>} />
-        <Route
-          path="auth"
-          element={
-            <ProtectedRoute>
-              <AppAuth />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+      
+        <Box
+          margin={0}
+          minWidth="max-content"
+          maxHeight="100%"
+          textAlign="center"
+          fontSize="xl"
+        >
+          <AuthModal isOpen={isOpen} onClose={onClose} onToggle={onToggle} />
+          <Navbar onOpen={onOpen} />
+          <Grid templateColumns="repeat(4, 1fr)" margin={0} p={4} gap={4}>
+            <GridItem>
+              <PostSidebar />
+            </GridItem>
+            <GridItem colSpan={2}>
+              <MainFeed />
+            </GridItem>
+            <GridItem>
+              <SocialSidebar />
+            </GridItem>
+          </Grid>
+        </Box>
+      
     </ChakraProvider>
   );
-}
-
-export default App;
+};

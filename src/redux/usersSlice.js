@@ -1,20 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = [];
+const initialState = {
+  currentUser: {},
+  allUsers: [],
+  onlineUsers: [],
+};
 
 export const usersSlice = createSlice({
   name: 'users',
-  initialState, 
+  initialState,
   reducers: {
-    fetchUsers: (state) => {
+    fetchUsers: state => {
       //get all users from supabase
     },
-    currentUser: (state) => {
+    currentUser: (state, action) => {
       //set current users
+      return { ...state, currentUser: { ...action.payload } };
     },
+    logoutCurrentUser: (state) => {
+      //remove formerly auth user
+    return {...state, currentUser: {} }
+    }
   },
 });
 
-export const { fetchUsers, currentUser } = usersSlice.actions;
-
+export const { fetchUsers, currentUser, logoutCurrentUser } = usersSlice.actions;
 export default usersSlice.reducer;

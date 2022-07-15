@@ -14,10 +14,21 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Input
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { useFetchMessagesQuery } from './redux/supabaseQuery';
+import { useAuth } from "./context/AuthProvider"
 
 export const Navbar = ({ onOpen }) => {
   
+const { data, isFetching } = useFetchMessagesQuery()
+const { onLogout } = useAuth()
+
+useEffect(()=>{
+  console.log(data)
+})
+
   return (
     <Box position="sticky">
       <Flex
@@ -28,18 +39,20 @@ export const Navbar = ({ onOpen }) => {
         borderBottom="1px"
         borderColor="lightgrey"
       >
-        <Heading size="md">ilgit</Heading>
+        <Heading size="md" marginX="4">ilgit</Heading>
+
         <Spacer />
+        <Input type="search" placeholder="Search" width="96" marginX="4" />
         <ButtonGroup gap="2">
-          <Button colorScheme="teal"
-          onClick={onOpen}
-          >Sign In</Button>
-          <Button colorScheme="teal" variant="ghost" >
+          <Button colorScheme="teal" onClick={onOpen}>
+            Sign In
+          </Button>
+          <Button colorScheme="teal" variant="ghost" onClick={onLogout}>
             Sign Out
           </Button>
+          <Button onClick>Test Fetch</Button>
         </ButtonGroup>
       </Flex>
-      //TODO: move modal to separate component
     </Box>
   );
 };

@@ -1,24 +1,31 @@
 import { ColorModeScript } from '@chakra-ui/react';
 import React, { StrictMode } from 'react';
+import { render } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import * as ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import store from './redux/store'
+import store from './redux/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
-import ModalProvider from './context/ModalProvider'
+import ModalProvider from './context/ModalProvider';
+import { AuthProvider } from './context/AuthProvider';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
 root.render(
   <StrictMode>
-    <ColorModeScript />
-    <Provider store={store}>
-      <ModalProvider>
-      <App />
-      </ModalProvider>
-    </Provider>
+    <BrowserRouter>
+      <ColorModeScript />
+      <Provider store={store}>
+        <AuthProvider>
+          <ModalProvider>
+            <App />
+          </ModalProvider>
+        </AuthProvider>
+      </Provider>
+    </BrowserRouter>
   </StrictMode>
 );
 

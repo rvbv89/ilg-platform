@@ -14,7 +14,7 @@ export const SocialSidebar = () => {
       backgroundColor={'white'}
     >
       <Heading fontFamily='body' size="md" padding="4" color="lightslategray">
-        Buddies
+        Social
       </Heading>
     </Box>
   );
