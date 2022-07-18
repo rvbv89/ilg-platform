@@ -10,10 +10,16 @@ import {
   theme,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
-import { currentFeed } from './redux/feedSlice';
+import { currentFeed } from './redux/postsSlice';
+
+const feedIds = [
+  "Main", "Finance", "Technology", "Music"
+]
 
 export const PostSidebar = () => {
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  
 
   return (
     <Box
@@ -26,20 +32,58 @@ const dispatch = useDispatch()
       borderRadius={'4px'}
       backgroundColor={'white'}
     >
-      <Heading fontFamily="body" size="md" marginBottom="4" padding="4" color="slategrey">
+      <Heading
+        fontFamily="body"
+        size="md"
+        marginBottom="4"
+        padding="4"
+        color="slategrey"
+      >
         Feeds
       </Heading>
 
       <ButtonGroup>
         <VStack spacing="6">
-          <Button onClick={(id) => {
-            dispatch(currentFeed(id.value))
-          }} id="main">Main</Button>
-          <Button id="finance" value="finance" onClick={(value) => {
-            dispatch(currentFeed(value))
-          }}>Finance</Button>
-          <Button id="music">Music</Button>
-          <Button id="technology">Technology</Button>
+
+          {feedIds.map(id =>  {
+            return(<Button
+            value={id.toLowerCase()}
+            onClick={e => {
+              dispatch(currentFeed(e.target.value))
+            }}
+            >{id}</Button>)
+            })}
+
+          {/* <Button
+            id="main"
+            value="main"
+            onClick={e => {
+              dispatch(currentFeed(e.target.value));
+            }}
+          >
+            Main
+          </Button>
+
+          <Button
+            id="finance"
+            value="finance"
+            onClick={e => {
+              dispatch(currentFeed(e.target.value));
+            }}
+          >
+            Finance
+          </Button>
+          <Button id="music"
+          value="music"
+          onClick={e =>{
+            dispatch(currentFeed(e.target.value))
+          }}
+          >Music</Button>
+          <Button id="technology" value="technology"
+          onClick={e => {
+            dispatch(currentFeed(e.target.value))
+          }}
+          >Technology</Button> */}
         </VStack>
       </ButtonGroup>
     </Box>
