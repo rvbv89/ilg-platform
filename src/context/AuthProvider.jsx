@@ -8,7 +8,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { currentUser, logoutCurrentUser } from "../redux/usersSlice"
+import { currentUser, logoutCurrentUser } from '../redux/usersSlice';
 
 const AuthContext = React.createContext();
 
@@ -18,9 +18,11 @@ export function useAuth() {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [authStatus, setAuthStatus] = useState(
-    localStorage.getItem('authStatus') || false
-  );
+  // const [authStatus, setAuthStatus] = useState(
+  //   localStorage.getItem('authStatus') || false
+  // );
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,18 +33,18 @@ export const AuthProvider = ({ children }) => {
 
   //Listen to auth changes
 
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event == 'SIGNED_OUT') {
-        console.log(event);
-      } else {
-        console.log(event, session.user);
-        localStorage.setItem('authStatus', true);
-        setUser(session.user.id);
-      }
-    });
-    console.log('auth effect');
-  }, []);
+  // useEffect(() => {
+  //   supabase.auth.onAuthStateChange((event, session) => {
+  //     if (event == 'SIGNED_OUT') {
+  //       console.log(event);
+  //     } else {
+  //       console.log(event, session.user);
+  //       localStorage.setItem('authStatus', true);
+  //       setUser(session.user.id);
+  //     }
+  //   });
+  //   console.log('auth effect');
+  // }, []);
 
   // useEffect(() => {
   //   if (!user) {
@@ -62,10 +64,8 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      console.log(user);
-      dispatch(currentUser(user))
-      localStorage.setItem("user", user)
-
+      localStorage.setItem('user', JSON.stringify(user));
+      setIsSignedIn(true);
       if (error) {
         console.log(error);
         alert(error.message);
@@ -73,10 +73,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem('user'));
+    dispatch(currentUser(user));
+  }, [isSignedIn]);
+
   const handleLogout = async () => {
     let { error } = await supabase.auth.signOut();
-    dispatch(logoutCurrentUser())
-    localStorage.removeItem("user")
+    dispatch(logoutCurrentUser());
+    setIsSignedIn(false);
+    localStorage.removeItem('user');
   };
 
   const handleRegister = async (username, email, password) => {

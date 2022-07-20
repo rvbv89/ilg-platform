@@ -17,7 +17,7 @@ import theme from './theme';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
 import { Navbar } from './Navbar';
-import { MainFeed } from './MainFeed';
+import { PostFeed } from './PostFeed';
 import { PostSidebar } from './PostSidebar';
 import { SocialSidebar } from './SocialSidebar';
 import { AuthModal } from './AuthModal';
@@ -40,7 +40,7 @@ export const AppAuth = () => {
             <PostSidebar />
           </GridItem>
           <GridItem colSpan={2}>
-            <MainFeed />
+            <PostFeed />
             auth
           </GridItem>
           <GridItem>

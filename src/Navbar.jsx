@@ -22,12 +22,12 @@ import { useAuth } from "./context/AuthProvider"
 
 export const Navbar = ({ onOpen }) => {
   
-const { data, isFetching } = useFetchMessagesQuery()
+// const { data, isFetching } = useFetchMessagesQuery()
 const { onLogout } = useAuth()
 
-useEffect(()=>{
-  console.log(data)
-})
+// useEffect(()=>{
+//   console.log(data)
+// })
 
   return (
     <Box position="sticky">
