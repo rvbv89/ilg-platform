@@ -25,7 +25,12 @@ import { AppAuth } from './AppAuth';
 import { Register } from './Register';
 import { useFetchMessagesQuery } from './redux/supabaseQuery';
 import { useDispatch, useSelector } from 'react-redux';
-import { addAllPosts } from './redux/postsSlice';
+import {
+  addAllPosts,
+  addNewPost,
+  addPostsFromSubscription,
+  currentFeed,
+} from './redux/postsSlice';
 import { supabase } from '../src/supabase/init';
 
 function App() {
@@ -35,44 +40,42 @@ function App() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      let { data: messages, error } = await supabase.from('messages').select("*");
-      console.log(messages);
-      dispatch(addAllPosts(messages))
+      let { data: messages, error } = await supabase
+        .from('messages')
+        .select('*');
+      console.log('fetch effect');
+      dispatch(addAllPosts(messages));
       if (error) {
-        console.log(error)
+        console.log(error);
       }
     };
-    fetchPosts()
-  },[]);
+    fetchPosts();
+  }, [currentFeed]);
 
   useEffect(() => {
     const postsListener = supabase
       .from('messages')
-      .on('*', payload => {
-        dispatch(addAllPosts(payload));
-        console.log(payload);
+      .on('INSERT', payload => {
+        console.log('new message', payload.new);
+        dispatch(addNewPost(payload.new));
       })
-      .subscribe();
+      .subscribe((status, e) => {
+        console.log('status', status, e);
+        if (status == 'RETRYING_AFTER_TIMEOUT') {
+          console.log('retrying subscription');
+        } else if (status == 'SUBSCRIBED') {
+          console.log('subscribed');
+        }
+      });
 
     return () => {
-      postsListener.unsubscribe();
+      supabase.removeSubscription(postsListener);
     };
   }, []);
 
   return (
     <ChakraProvider theme={theme}>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="register" element={<Register />} />
-        <Route
-          path="auth"
-          element={
-            <ProtectedRoute>
-              <AppAuth />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+      <Home />
     </ChakraProvider>
   );
 }

@@ -45,7 +45,7 @@ export const PostSidebar = () => {
               <Button
                 value={id}
                 onClick={e => {
-                  dispatch(currentFeed(e.target.value));
+                  dispatch(currentFeed(e.target.value.toLowerCase()));
                 }}
               >
                 {`#${id}`}

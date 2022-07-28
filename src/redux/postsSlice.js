@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currentFeed: 'Main',
+  currentFeed: 'main',
   allPosts: [],
   currentFeedPosts: [],
 };
@@ -14,7 +14,13 @@ export const postsSlice = createSlice({
       return { ...state, currentFeed: action.payload };
     },
     addAllPosts: (state, action) => {
-      return {...state, allPosts: action.payload}
+      return { ...state, allPosts: action.payload };
+    },
+    addNewPost: (state, action) => {
+      state.allPosts.push(action.payload)
+    },
+    addPostsFromSubscription: (state, action) => {
+      return { ...state, allPosts: action.payload };
     },
     deletePost: (state, action) => {
       //delete post for current user
@@ -22,6 +28,12 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { currentFeed, addAllPosts, deletePost } = postsSlice.actions;
+export const {
+  currentFeed,
+  addAllPosts,
+  addNewPost,
+  addPostsFromSubscription,
+  deletePost,
+} = postsSlice.actions;
 
 export default postsSlice.reducer;

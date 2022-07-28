@@ -18,24 +18,36 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { AddIcon, EditIcon } from '@chakra-ui/icons';
-import postsSlice from './redux/postsSlice';
-import { useSelector } from 'react-redux/es/exports';
+import postsSlice, { addAllPosts, addNewPost } from './redux/postsSlice';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { supabase } from './supabase/init';
+import dayjs, { Dayjs } from 'dayjs';
 
 export const PostFeed = () => {
-//define vars for redux state
+  const dispatch = useDispatch();
+  //define vars for redux state
+
   let currentFeedTitle = useSelector(state => state.posts.currentFeed);
   let posts = useSelector(state => state.posts.allPosts);
-  let user = useSelector(state => state.currentUser);
+  let user = useSelector(state => state.users.currentUser);
   let isLoggedIn = useSelector(state => state.users.isLoggedIn);
+
+  const [render, setRender] = useState(false);
 
   //local state to render posts based on current feed
   const [filteredPosts, setFilteredPosts] = useState([]);
 
+  //local state for user post input value
+  const [value, setValue] = useState('');
+
   //Post submission modal props
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  //effect to set the current feed and posts displayed based on 
+  useEffect(() => {
+    console.log(user);
+  }, []);
+
+  //effect to set the current feed and posts displayed based on
   //posts available in redux store
   useEffect(() => {
     if (posts === []) {
@@ -46,20 +58,51 @@ export const PostFeed = () => {
       setFilteredPosts(filteredPostArr);
       console.log(filteredPosts);
     }
-  }, [currentFeedTitle, posts]);
+  }, [posts, currentFeedTitle]);
 
-  //add user submitted post to supabase table
-  const handleSubmitPost = () => {
-    const { data, error } = await supabase
-    .from("messages")
-    .insert([
-      {}
-    ])
-  }
+  //capture user input to send to local state
+  const handleInputChange = e => {
+    let value = e.target.value;
+    setValue(value);
+  };
+
+  //add user submitted post to supabase table !!TODO!!
+  const handleSubmitPost = async () => {
+    const { data, error } = await supabase.from('messages').insert([
+      {
+        user_id: user.id,
+        username: user.user_metadata.username,
+        content: value,
+        feed: currentFeedTitle.toLowerCase(),
+      },
+    ]);
+    // dispatch(addNewPost(data));
+    onClose();
+  };
+
+  // useEffect(() => {
+  //   const postsListener = supabase
+  //     .from('messages')
+  //     .on('*', payload => {
+  //       const newMessage = payload.new;
+  //       dispatch(add(newMessage));
+  //     })
+  //     .subscribe();
+
+  //   return () => {
+  //     supabase.removeSubscription(postsListener);
+
+  //   };
+  // }, [currentFeedTitle]);
+
+  // useEffect(()=>{
+  //   setRender(!render)
+  // },[filteredPosts])
 
   return (
     // <Flex flexDirection="column" border="1px">
     <Box
+      boxSizing="border-box"
       display="flex"
       flexDirection="column"
       alignItems="center"
@@ -68,17 +111,33 @@ export const PostFeed = () => {
       borderColor="lightgrey"
       maxHeight={{ base: '20em', lg: '30em' }}
       minHeight={{ base: '20em', lg: '30em' }}
-      p={'10'}
+      maxWidth={'100%'}
+      paddingY="10"
       marginTop={{ base: '4', lg: '4' }}
       borderRadius={'4px'}
       backgroundColor={'white'}
-      overflowY="scroll"
+      overflowY="hidden"
     >
-      <Container justifyContent="center">
-        <Heading>{`#${currentFeedTitle}`}</Heading>
+      <Container justifyContent="center" overflowY={'scroll'}>
+        <Heading paddingBottom="4">{`#${currentFeedTitle}`}</Heading>
         <VStack>
           {filteredPosts.map(post => {
-            return <Button value={post.id}>{post.content}</Button>;
+            return (
+              <Box
+                value={post.id}
+                backgroundColor="lightblue"
+                borderRadius="6px"
+                padding="4"
+              >
+                <span>
+                  Posted by{' '}
+                  <span style={{fontWeight: "bold"}}>{user.user_metadata.username} </span>
+                  on 
+                  <span style={{fontWeight: "bold"}}> {dayjs(post.created_at).toString()}</span>
+                </span>
+                <p>{post.content}</p>
+              </Box>
+            );
           })}
         </VStack>
       </Container>
@@ -123,6 +182,8 @@ export const PostFeed = () => {
                   <ModalCloseButton />
                   <ModalBody>
                     <Textarea
+                      value={value}
+                      onChange={handleInputChange}
                       minWidth="95%"
                       marginLeft="2"
                       type="text"
@@ -132,7 +193,9 @@ export const PostFeed = () => {
                   </ModalBody>
 
                   <ModalFooter>
-                    <Button colorScheme="teal">Submit Post</Button>
+                    <Button onClick={handleSubmitPost} colorScheme="teal">
+                      Submit Post
+                    </Button>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
