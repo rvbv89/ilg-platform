@@ -3,11 +3,11 @@ This is currently a simple text-based social media site built with React and Sup
 project, I used the Context API to manage state and provide business logic; it was simple, but I could see it quickly becoming unwieldy.  Redux, especially with all 
 of its current newbie-friendly abstractions, has been a breeze so far. 
 
-# Current Todos: 
-Smooth out UI/customize theme
-Add 3rd party auth options
-Add media support
-Add direct chats
+# Current Todos
+-Smooth out UI/customize theme<br />
+-Add 3rd party auth options<br />
+-Add media support<br />
+-Add direct chats<br />
 
 ## Available Scripts
 
