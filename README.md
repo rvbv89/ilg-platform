@@ -4,10 +4,10 @@ project, I used the Context API to manage state and provide business logic; it w
 of its current newbie-friendly abstractions, has been a breeze so far. 
 
 # Current Todos
--Smooth out UI/customize theme<br />
 -Add 3rd party auth options<br />
 -Add media support<br />
 -Add direct chats<br />
+-Smooth out UI/customize theme<br />
 
 ## Available Scripts
 
