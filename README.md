@@ -1,4 +1,10 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# About this project
+This is currently a simple text-based social media site built with React and Supabase.  I'm using this project as an opportunity to teach myself Redux.  In my chatroom
+project, I used the Context API to manage state and provide business logic; it was simple, but I could see it quickly becoming unwieldy.  Redux, especially with all 
+of its current newbie-friendly abstractions, has been a breeze so far. 
+
+I'm continuing to work on this app.  I'll be smoothing out the UI and adding some sort of 
+media support soon.  
 
 ## Available Scripts
 
