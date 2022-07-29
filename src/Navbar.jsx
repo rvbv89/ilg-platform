@@ -14,20 +14,19 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Input
+  Input,
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useFetchMessagesQuery } from './redux/supabaseQuery';
-import { useAuth } from "./context/AuthProvider"
+import { useAuth } from './context/AuthProvider';
 
 export const Navbar = ({ onOpen }) => {
-  
-// const { data, isFetching } = useFetchMessagesQuery()
-const { onLogout } = useAuth()
+  // const { data, isFetching } = useFetchMessagesQuery()
+  const { onLogout } = useAuth();
 
-// useEffect(()=>{
-//   console.log(data)
-// })
+  // useEffect(()=>{
+  //   console.log(data)
+  // })
 
   return (
     <Box position="sticky">
@@ -39,8 +38,9 @@ const { onLogout } = useAuth()
         borderBottom="1px"
         borderColor="lightgrey"
       >
-        <Heading size="md" marginX="4">ilgit</Heading>
-
+        <Heading size="md" marginX="4">
+          ilg-platform
+        </Heading>
         <Spacer />
         <Input type="search" placeholder="Search" width="96" marginX="4" />
         <ButtonGroup gap="2">
@@ -50,7 +50,6 @@ const { onLogout } = useAuth()
           <Button colorScheme="teal" variant="ghost" onClick={onLogout}>
             Sign Out
           </Button>
-          <Button onClick>Test Fetch</Button>
         </ButtonGroup>
       </Flex>
     </Box>

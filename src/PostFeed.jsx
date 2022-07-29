@@ -121,49 +121,49 @@ export const PostFeed = () => {
       <Container justifyContent="center" overflowY={'scroll'}>
         <Heading paddingBottom="4">{`#${currentFeedTitle}`}</Heading>
         <VStack>
-          {filteredPosts.map(post => {
+          {filteredPosts !== [] && filteredPosts.map(post => {
             return (
               <Box
                 value={post.id}
                 backgroundColor="lightblue"
                 borderRadius="6px"
                 padding="4"
+                margin="4"
               >
-                <span>
-                  Posted by{' '}
-                  <span style={{fontWeight: "bold"}}>{user.user_metadata.username} </span>
-                  on 
-                  <span style={{fontWeight: "bold"}}> {dayjs(post.created_at).toString()}</span>
-                </span>
-                <p>{post.content}</p>
+                <div style={{ color: 'slategrey', fontSize: 15 }}>
+                  <span paddingBottom="2">
+                    Posted by{' '}
+                    <span style={{ fontWeight: 'bold' }}>
+                      {post.username}{' '}
+                    </span>
+                    on
+                    <span style={{ fontWeight: 'bold' }}>
+                      {' '}
+                      {dayjs(post.created_at).toString()}
+                    </span>
+                  </span>
+                </div>
+
+                <p style={{ color: 'black', fontSize: 20, paddingTop: 4 }}>
+                  {post.content}
+                </p>
               </Box>
             );
           })}
         </VStack>
       </Container>
 
-      <Container>
+      <Container paddingTop="6">
         {isLoggedIn === true && (
           <>
             <Box
               as="button"
               onClick={onOpen}
-              bgGradient={
-                'linear(to-r, rgba(34,193,195,1) 0%, rgba(253,187,45,1))'
-              }
+              colorScheme={'teal'}
               lineHeight="1.2"
               transition="all .3s cubic-bezier(.08, .52, .52, 1)"
               height="50px"
               borderRadius="6px"
-              _hover={{
-                bgGradient:
-                  'linear(to-b, rgba(38,209,212,1) 0%, rgba(253,247,45,1)',
-              }}
-              _active={{
-                bgGradient:
-                  'linear(to-b, rgba(38,209,212,1) 0%, rgba(253,247,45,1)',
-                transform: 'scale(0.98)',
-              }}
             >
               <Container
                 display="flex"
@@ -171,7 +171,11 @@ export const PostFeed = () => {
                 justifyContent="center"
                 paddingBottom=".75px"
               >
-                <EditIcon fontWeight="light" display="inline-block" />
+                <EditIcon
+                  boxSize="10"
+                  fontWeight="light"
+                  display="inline-block"
+                />
               </Container>
             </Box>
             <Container>
