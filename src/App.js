@@ -37,7 +37,9 @@ function App() {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { data, error, isLoading } = useFetchMessagesQuery();
   const dispatch = useDispatch();
-
+  let user = useSelector(state => state.users.currentUser)
+  let isLoggedIn = useSelector(state => state.users.isLoggedIn)
+  
   useEffect(() => {
     const fetchPosts = async () => {
       let { data: messages, error } = await supabase
@@ -53,6 +55,9 @@ function App() {
   }, [currentFeed]);
 
   useEffect(() => {
+    if (isLoggedIn === false) {
+      return
+    } else {
     const postsListener = supabase
       .from('messages')
       .on('INSERT', payload => {
@@ -71,7 +76,8 @@ function App() {
     return () => {
       supabase.removeSubscription(postsListener);
     };
-  }, []);
+  }
+  }, [isLoggedIn]);
 
   return (
     <ChakraProvider theme={theme}>

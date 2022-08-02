@@ -8,7 +8,8 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { currentUser, logoutCurrentUser } from '../redux/usersSlice';
+import { currentUser, currentUsername, logoutCurrentUser } from '../redux/usersSlice';
+
 
 const AuthContext = React.createContext();
 
@@ -74,8 +75,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem('user'));
-    dispatch(currentUser(user));
+    if (isSignedIn === false) {
+      return;
+    } else {
+      let user = JSON.parse(localStorage.getItem('user'));
+      let username = user.user_metadata.username
+      console.log(username);
+      dispatch(currentUser(user));
+      dispatch(currentUsername(username));
+    }
   }, [isSignedIn]);
 
   const handleLogout = async () => {

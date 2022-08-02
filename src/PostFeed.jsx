@@ -132,7 +132,7 @@ export const PostFeed = () => {
               >
                 <div style={{ color: 'slategrey', fontSize: 15 }}>
                   <span paddingBottom="2">
-                    Posted by{' '}
+                    Posted by
                     <span style={{ fontWeight: 'bold' }}>
                       {post.username}{' '}
                     </span>
