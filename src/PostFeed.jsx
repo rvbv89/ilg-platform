@@ -118,7 +118,7 @@ export const PostFeed = () => {
       backgroundColor={'white'}
       overflowY="hidden"
     >
-      <Container justifyContent="center" overflowY={'scroll'}>
+      <Container justifyContent="center" overflowY={'auto'}>
         <Heading paddingBottom="4">{`#${currentFeedTitle}`}</Heading>
         <VStack>
           {filteredPosts !== [] && filteredPosts.map(post => {
@@ -134,7 +134,7 @@ export const PostFeed = () => {
                   <span paddingBottom="2">
                     Posted by
                     <span style={{ fontWeight: 'bold' }}>
-                      {post.username}{' '}
+                    {' '}{post.username}{' '}
                     </span>
                     on
                     <span style={{ fontWeight: 'bold' }}>

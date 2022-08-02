@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Box, Text, Heading, Container } from '@chakra-ui/react';
+import { Flex, Box, Text, Heading, Container, Divider, VStack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux/es/exports';
 
 export const SocialSidebar = () => {
@@ -31,6 +31,10 @@ export const SocialSidebar = () => {
               style={{fontWeight:"bold"}}
               >{username}</span>
             </Box>
+            <Divider />
+            <VStack>
+
+            </VStack>
           </>
         )}
       </Container>

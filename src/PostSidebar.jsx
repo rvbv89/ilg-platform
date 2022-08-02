@@ -12,7 +12,7 @@ import {
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import { currentFeed } from './redux/postsSlice';
 
-const feedIds = ['Main', 'Finance', 'Technology', 'Music'];
+const feedIds = ['main', 'finance', 'technology', 'music'];
 
 export const PostSidebar = () => {
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ export const PostSidebar = () => {
               <Button
                 value={id}
                 onClick={e => {
-                  dispatch(currentFeed(e.target.value.toLowerCase()));
+                  dispatch(currentFeed(e.target.value));
                 }}
               >
                 {`#${id}`}
