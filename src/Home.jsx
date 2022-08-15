@@ -39,7 +39,7 @@ export const Home = () => {
         <Navbar onOpen={onOpen} />
         <SimpleGrid columns={3} maxChildWidth="35%">
           <GridItem>
-            <Container maxHeight="100vh" overflowY={['auto', 'auto', 'hidden', 'hidden']}     
+            <Container maxHeight={['100vh', '100vh', 'none', 'none']} overflowY={['auto', 'auto', 'hidden', 'hidden']}     
             css={{
           '&::-webkit-scrollbar': {
             width: '6px', 
