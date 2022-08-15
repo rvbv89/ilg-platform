@@ -77,7 +77,7 @@ export const PostFeed = () => {
     const { data, error } = await supabase.from('messages').insert([
       {
         user_id: user.id,
-        // username: user.user_metadata.username,
+        username: user.user_metadata.username,
         content: value,
         feed: currentFeedTitle,
       },
