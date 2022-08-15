@@ -99,16 +99,16 @@ export const PostFeed = () => {
       alignItems="center"
       justifyContent="space-between"
       borderColor="lightgrey"
-      maxHeight={{ base: '20em', lg: '30em' }}
+      maxHeight={{ base: '30em', lg: '30em' }}
       minHeight={{ base: '20em', lg: '30em' }}
       maxWidth={'100%'}
-      paddingY="10"
+    
       marginTop={{ base: '4', lg: '4' }}
       borderRadius={'4px'}
       backgroundColor={'white'}
       overflowY="hidden"
     >
-        <Heading paddingBottom="4">{`#${currentFeedTitle}`}</Heading>
+      <Heading paddingBottom="4">{`#${currentFeedTitle}`}</Heading>
       <Container
         justifyContent="center"
         overflowY={'auto'}
@@ -134,7 +134,7 @@ export const PostFeed = () => {
                   value={post.id}
                   backgroundColor="lightblue"
                   borderRadius="6px"
-                  padding={['0.5', '4', '4','4']}
+                  padding={['0.5', '4', '4', '4']}
                   margin="4"
                   maxWidth="100%"
                 >

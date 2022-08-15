@@ -23,11 +23,14 @@ export const AuthModal = ({ isOpen, onClose }) => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
+
   // const { user } = useHandleLoginPMutation('garzotto5389@gmail.com', 'password')
 
   return (
     <div>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef} finalFocusRef={finalRef}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Please Sign In To Your Account</ModalHeader>

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   Flex,
   Heading,
@@ -10,6 +11,7 @@ import {
   Box,
   Link,
   FormControl,
+  FormLabel,
   InputRightElement,
 } from '@chakra-ui/react';
 import { useAuth } from './context/AuthProvider';
@@ -22,6 +24,12 @@ export const Register = () => {
   const usernameRef = useRef();
 
   const { onRegister } = useAuth();
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
   return (
     <Flex
@@ -38,26 +46,28 @@ export const Register = () => {
         alignItems="center"
       >
         <Box maxW={{ base: '90%', md: '50em' }}>
-          <form>
+          <form onSubmit={handleSubmit(onRegister)}>
             <Stack rounded="md" spacing={4} p="2rem" boxShadow="md">
               <Heading fontSize="2xl" fontWeight="normal">
                 Please enter a valid email, username and password to complete
                 registration
               </Heading>
-              <FormControl>
+              <FormControl id="email">
                 <InputGroup>
                   <InputLeftElement
                     // children={<EmailIcon color="darkGrey" />}
                     pointerEvents="none"
                   />
+                  {/* <FormLabel htmlFor='email'>Email Address</FormLabel> */}
                   <Input
                     ref={emailRef}
+                    name="email"
                     type="email"
                     placeholder="Email Address"
                   />
                 </InputGroup>
               </FormControl>
-              <FormControl>
+              <FormControl id="userName">
                 <InputGroup>
                   <InputLeftElement
                     // children={
@@ -69,16 +79,18 @@ export const Register = () => {
                     // }
                     pointerEvents="none"
                   />
-                  <Input ref={usernameRef} placeholder="Username" />
+                  {/* <FormLabel htmlFor='text'>Username</FormLabel> */}
+                  <Input ref={usernameRef} type="text" placeholder="Username" />
                 </InputGroup>
               </FormControl>
-              <FormControl>
+              <FormControl id="password">
                 <InputGroup>
                   <InputLeftElement
                     // children={<LockIcon color="darkGrey" />}
                     pointerEvents="none"
                     color="grey"
                   />
+                  {/* <FormLabel htmlFor='password'>Password</FormLabel> */}
                   <Input
                     // backgroundColor='grey'
                     ref={passwordRef}

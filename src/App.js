@@ -111,6 +111,7 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
+    
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
