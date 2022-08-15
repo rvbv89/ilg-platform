@@ -4,6 +4,7 @@ import { ProtectedRoute } from './routes/ProtectedRoute';
 import '@fontsource/barlow';
 import {
   ChakraProvider,
+  Container,
   Box,
   Text,
   Link,
@@ -27,34 +28,40 @@ export const Home = () => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   return (
     <ChakraProvider theme={theme}>
-      <Box
-        margin={0}
-        minWidth="max-content"
-        maxHeight="100%"
-        textAlign="center"
-        fontSize="xl"
-      >
-        {/* templateColumns="repeat(4, 1fr)" margin={2} p={0} gap={4 */}
+      <Container maxWidth="100%" overflowX="hidden">
+        <Box
+          // margin={0}
+          // minWidth="max-content"
+          maxHeight="100%"
+          textAlign="center"
+          fontSize="xl"
+        >
+          {/* templateColumns="repeat(4, 1fr)" margin={2} p={0} gap={4 */}
 
-        <AuthModal isOpen={isOpen} onClose={onClose} onToggle={onToggle} />
-        <Navbar onOpen={onOpen} />
-        <SimpleGrid minChildWidth="100px">
-          <GridItem>
-            <VStack>
-              <PostSidebar />
-              <div visibility={['visible', 'visible', 'hidden', 'hidden']}>
-                <SocialSidebar />
-              </div>
-            </VStack>
-          </GridItem>
-          <GridItem colSpan={['3', '2', '1', '1']}>
-            <PostFeed />
-          </GridItem>
-          <GridItem visibility={['hidden', 'hidden', 'hidden', 'visible']}>
-            <SocialSidebar />
-          </GridItem>
-        </SimpleGrid>
-      </Box>
+          <AuthModal isOpen={isOpen} onClose={onClose} onToggle={onToggle} />
+          <Navbar onOpen={onOpen} />
+          <SimpleGrid minChildWidth="100px">
+            <GridItem>
+              <VStack>
+                <PostSidebar />
+                <Container
+                  centerContent
+                  padding="0"
+                  visibility={['visible', 'visible', 'visible', 'hidden']}
+                >
+                  <SocialSidebar />
+                </Container>
+              </VStack>
+            </GridItem>
+            <GridItem colSpan={['2', '2', '1', '1']}>
+              <PostFeed />
+            </GridItem>
+            <GridItem visibility={['hidden', 'hidden', 'hidden', 'visible']}>
+              <SocialSidebar />
+            </GridItem>
+          </SimpleGrid>
+        </Box>
+      </Container>
     </ChakraProvider>
   );
 };
