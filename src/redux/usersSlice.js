@@ -2,25 +2,25 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   currentUser: {},
-  currentUsername: "",
+  currentUsername: '',
   isLoggedIn: false,
-  allUsers: [],
-  onlineUsers: [],
+  allOtherUsers: [],
 };
 
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    fetchUsers: state => {
+    getAllOtherUsers: (state, action) => {
       //get all users from supabase
+      return { ...state, allOtherUsers: action.payload}
     },
     currentUser: (state, action) => {
-      //set current users
+      //set current user
       return { ...state, currentUser: { ...action.payload }, isLoggedIn: true };
     },
-    currentUsername: (state, action)=> {
-      return {...state, currentUsername: action.payload}
+    currentUsername: (state, action) => {
+      return { ...state, currentUsername: action.payload };
     },
     logoutCurrentUser: () => {
       //remove formerly auth user
@@ -29,6 +29,6 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { fetchUsers, currentUser, currentUsername, logoutCurrentUser } =
+export const { getAllOtherUsers, currentUser, currentUsername, logoutCurrentUser } =
   usersSlice.actions;
 export default usersSlice.reducer;

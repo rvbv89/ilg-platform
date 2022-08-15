@@ -34,19 +34,23 @@ export const Home = () => {
         textAlign="center"
         fontSize="xl"
       >
-
-{/* templateColumns="repeat(4, 1fr)" margin={2} p={0} gap={4 */}
+        {/* templateColumns="repeat(4, 1fr)" margin={2} p={0} gap={4 */}
 
         <AuthModal isOpen={isOpen} onClose={onClose} onToggle={onToggle} />
         <Navbar onOpen={onOpen} />
-        <SimpleGrid minChildWidth="100px" >
+        <SimpleGrid minChildWidth="100px">
           <GridItem>
-            <PostSidebar />
+            <VStack>
+              <PostSidebar />
+              <div visibility={['visible', 'visible', 'hidden', 'hidden']}>
+                <SocialSidebar />
+              </div>
+            </VStack>
           </GridItem>
-          <GridItem >
+          <GridItem colSpan={['3', '2', '1', '1']}>
             <PostFeed />
           </GridItem>
-          <GridItem>
+          <GridItem visibility={['hidden', 'hidden', 'hidden', 'visible']}>
             <SocialSidebar />
           </GridItem>
         </SimpleGrid>

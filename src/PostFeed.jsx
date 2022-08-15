@@ -72,7 +72,7 @@ export const PostFeed = () => {
     setValue(value);
   };
 
-  //add user submitted post to supabase table !!TODO!!
+  //add user submitted post to supabase table
   const handleSubmitPost = async () => {
     const { data, error } = await supabase.from('messages').insert([
       {
@@ -85,21 +85,6 @@ export const PostFeed = () => {
     setValue('');
     onClose();
   };
-
-  // useEffect(() => {
-  //   const postsListener = supabase
-  //     .from('messages')
-  //     .on('*', payload => {
-  //       const newMessage = payload.new;
-  //       dispatch(addAllPosts(newMessage));
-  //     })
-  //     .subscribe();
-
-  //   return () => {
-  //     supabase.removeSubscription(postsListener);
-
-  //   };
-  // }, [currentFeedTitle]);
 
   useEffect(() => {
     setRender(!render);
@@ -217,7 +202,6 @@ export const PostFeed = () => {
                       <ModalBody>
                         <FormLabel>Let Your Voice Be Heard...</FormLabel>
                         <Textarea
-                          as="input"
                           ref={initialRef}
                           value={value}
                           onChange={handleInputChange}

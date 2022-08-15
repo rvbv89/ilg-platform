@@ -32,12 +32,14 @@ import {
   currentFeed,
 } from './redux/postsSlice';
 import { supabase } from '../src/supabase/init';
+import { getAllOtherUsers, getAllUsers } from './redux/usersSlice';
 
 function App() {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { data, error, isLoading } = useFetchMessagesQuery();
   const dispatch = useDispatch();
   let user = useSelector(state => state.users.currentUser);
+  let username = useSelector(state => state.users.currentUsername)
   let isLoggedIn = useSelector(state => state.users.isLoggedIn);
 
   // supabase.auth.onAuthStateChange((event, session) => {
@@ -47,6 +49,26 @@ function App() {
   //     console.log('current username')
   //   }
   // })
+
+  useEffect(() => {
+    if (isLoggedIn === false){
+      return
+    } else {  
+      const fetchUsers = async () => {
+      let { data, error } = await supabase.from('users')
+      .select('username')
+      .not('username', 'eq', username)
+      console.log(data);
+      dispatch(getAllOtherUsers(data));
+      if (error) {
+        console.log(error);
+      }
+    };
+    fetchUsers()
+  }
+  
+    
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -66,21 +88,21 @@ function App() {
     const postsListener = supabase
       .from('messages')
       .on('INSERT', payload => {
-        console.log('insert listener')
+        console.log('insert listener');
         console.log(payload);
         dispatch(addNewPost(payload.new));
       })
       // .subscribe();
-    .subscribe((status, e) => {
-      console.log('status', status, e);
-      if (status == 'RETRYING_AFTER_TIMEOUT') {
-        console.log('retrying subscription');
-      } else if (status == 'SUBSCRIBED') {
-        console.log('subscribed');
-      } else if (status == 'SUBSCRIPTION_ERROR') {
-        console.log(status);
-      }
-    });
+      .subscribe((status, e) => {
+        console.log('status', status, e);
+        if (status == 'RETRYING_AFTER_TIMEOUT') {
+          console.log('retrying subscription');
+        } else if (status == 'SUBSCRIBED') {
+          console.log('subscribed');
+        } else if (status == 'SUBSCRIPTION_ERROR') {
+          console.log(status);
+        }
+      });
 
     return () => {
       supabase.removeSubscription(postsListener);

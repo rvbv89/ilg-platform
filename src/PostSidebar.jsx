@@ -7,6 +7,7 @@ import {
   ButtonGroup,
   Button,
   VStack,
+  Divider,
   theme,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
@@ -46,46 +47,16 @@ export const PostSidebar = () => {
                 onClick={e => {
                   dispatch(currentFeed(e.target.value));
                 }}
-
                 size="lg"
               >
                 {`#${id}`}
               </Button>
             );
           })}
-
-          {/* <Button
-            id="main"
-            value="main"
-            onClick={e => {
-              dispatch(currentFeed(e.target.value));
-            }}
-          >
-            Main
-          </Button>
-
-          <Button
-            id="finance"
-            value="finance"
-            onClick={e => {
-              dispatch(currentFeed(e.target.value));
-            }}
-          >
-            Finance
-          </Button>
-          <Button id="music"
-          value="music"
-          onClick={e =>{
-            dispatch(currentFeed(e.target.value))
-          }}
-          >Music</Button>
-          <Button id="technology" value="technology"
-          onClick={e => {
-            dispatch(currentFeed(e.target.value))
-          }}
-          >Technology</Button> */}
         </VStack>
       </ButtonGroup>
+      <Divider visibility={["visible", "visible", "hidden", "hidden"]} marginY="4" />
+      
     </Box>
   );
 };
