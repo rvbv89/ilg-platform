@@ -114,10 +114,10 @@ export const PostFeed = () => {
         overflowY={'auto'}
         css={{
           '&::-webkit-scrollbar': {
-            width: '4px',
+            width: '6px',
           },
           '&::-webkit-scrollbar-track': {
-            width: '6px',
+            width: '8px',
           },
           '&::-webkit-scrollbar-thumb': {
             background: 'slategrey',
