@@ -20,7 +20,6 @@ export const PostSidebar = () => {
   return (
     <Box
       centerContent
-      border="1px"
       borderColor="lightgrey"
       maxHeight={{ base: '20em', lg: '30em' }}
       minHeight={{ base: '20em', lg: '30em' }}
@@ -47,6 +46,8 @@ export const PostSidebar = () => {
                 onClick={e => {
                   dispatch(currentFeed(e.target.value));
                 }}
+
+                size="lg"
               >
                 {`#${id}`}
               </Button>

@@ -12,9 +12,9 @@ import {
   FormLabel,
   Input,
   Text,
-  Link,
+  
 } from '@chakra-ui/react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { useAuth } from './context/AuthProvider';
 
 
@@ -42,7 +42,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
           </ModalBody>
           <ModalFooter>
             <Text>
-              No Account? Register <Link href="/register">here</Link>
+              No Account? Register{' '}<Link to="/register">here</Link>
             </Text>
             <Button
               colorScheme="teal"

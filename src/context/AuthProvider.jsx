@@ -53,43 +53,43 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      localStorage.setItem('user', JSON.stringify(user));
-      
       if (error) {
         console.log(error);
         alert(error.message);
+      } else {
+        localStorage.setItem('user', JSON.stringify(user));
+        dispatch(currentUser(user));
+        let username = user.user_metadata.username;
+        dispatch(currentUsername(username));
       }
     }
   };
 
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user"))
-    if (!user){
-      setIsSignedIn(false)
-      return
-    } else {
-      console.log(user)
-      setIsSignedIn(true);
-      dispatch(currentUser(user));
-    }
-    console.log(isSignedIn)
-  },[user]);
-
-  useEffect(() => {
-    if (isSignedIn === false) {
+    let user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      setIsSignedIn(false);
       return;
     } else {
-      let user = JSON.parse(localStorage.getItem('user'));
+      dispatch(currentUser(user));
       let username = user.user_metadata.username;
       dispatch(currentUsername(username));
+      setIsSignedIn(true);
     }
-  }, [isSignedIn]);
+    console.log(isSignedIn);
+  }, []);
+
+  // useEffect(()=>{
+  //   const fetchUsers = async () => {
+  //     let { data, error } = await supabase.
+  //   }
+  // },[])
 
   const handleLogout = async () => {
+    localStorage.removeItem('user');
     let { error } = await supabase.auth.signOut();
     dispatch(logoutCurrentUser());
     setIsSignedIn(false);
-    localStorage.removeItem('user');
   };
 
   const handleRegister = async (username, email, password) => {
@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }) => {
         },
         {
           data: {
-            username: username,
+           username: username
           },
         }
       );

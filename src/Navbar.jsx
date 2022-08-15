@@ -24,10 +24,6 @@ export const Navbar = ({ onOpen }) => {
   // const { data, isFetching } = useFetchMessagesQuery()
   const { onLogout } = useAuth();
 
-  // useEffect(()=>{
-  //   console.log(data)
-  // })
-
   return (
     <Box position="sticky">
       <Flex
@@ -42,7 +38,7 @@ export const Navbar = ({ onOpen }) => {
           ilg-platform
         </Heading>
         <Spacer />
-        <Input type="search" placeholder="Search" width="96" marginX="4" />
+        {/* <Input type="search" placeholder="Search" width="96" marginX="4" /> */}
         <ButtonGroup gap="2">
           <Button colorScheme="teal" onClick={onOpen}>
             Sign In

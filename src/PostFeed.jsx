@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Flex,
   Box,
@@ -14,6 +14,8 @@ import {
   ModalContent,
   ModalCloseButton,
   ModalFooter,
+  FormControl,
+  FormLabel,
   Textarea,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -43,6 +45,10 @@ export const PostFeed = () => {
   //Post submission modal props
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  //refs for post input modal focus
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
+
   useEffect(() => {
     console.log(user);
   }, []);
@@ -53,7 +59,7 @@ export const PostFeed = () => {
     if (posts === []) {
       console.log('posts empty');
     } else {
-      let currentTitle = currentFeedTitle.toLowerCase();
+      let currentTitle = currentFeedTitle;
       let filteredPostArr = posts.filter(post => post.feed === currentTitle);
       setFilteredPosts(filteredPostArr);
       console.log(filteredPosts);
@@ -71,12 +77,12 @@ export const PostFeed = () => {
     const { data, error } = await supabase.from('messages').insert([
       {
         user_id: user.id,
-        username: user.user_metadata.username,
+        // username: user.user_metadata.username,
         content: value,
-        feed: currentFeedTitle.toLowerCase(),
+        feed: currentFeedTitle,
       },
     ]);
-    // dispatch(addNewPost(data));
+    setValue('');
     onClose();
   };
 
@@ -85,7 +91,7 @@ export const PostFeed = () => {
   //     .from('messages')
   //     .on('*', payload => {
   //       const newMessage = payload.new;
-  //       dispatch(add(newMessage));
+  //       dispatch(addAllPosts(newMessage));
   //     })
   //     .subscribe();
 
@@ -95,9 +101,9 @@ export const PostFeed = () => {
   //   };
   // }, [currentFeedTitle]);
 
-  // useEffect(()=>{
-  //   setRender(!render)
-  // },[filteredPosts])
+  useEffect(() => {
+    setRender(!render);
+  }, [filteredPosts]);
 
   return (
     // <Flex flexDirection="column" border="1px">
@@ -107,7 +113,6 @@ export const PostFeed = () => {
       flexDirection="column"
       alignItems="center"
       justifyContent="space-between"
-      border="1px"
       borderColor="lightgrey"
       maxHeight={{ base: '20em', lg: '30em' }}
       minHeight={{ base: '20em', lg: '30em' }}
@@ -118,38 +123,56 @@ export const PostFeed = () => {
       backgroundColor={'white'}
       overflowY="hidden"
     >
-      <Container justifyContent="center" overflowY={'auto'}>
+      <Container
+        justifyContent="center"
+        overflowY={'auto'}
+        css={{
+          '&::-webkit-scrollbar': {
+            width: '4px',
+          },
+          '&::-webkit-scrollbar-track': {
+            width: '6px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: 'slategrey',
+            borderRadius: '24px',
+          },
+        }}
+      >
         <Heading paddingBottom="4">{`#${currentFeedTitle}`}</Heading>
         <VStack>
-          {filteredPosts !== [] && filteredPosts.map(post => {
-            return (
-              <Box
-                value={post.id}
-                backgroundColor="lightblue"
-                borderRadius="6px"
-                padding="4"
-                margin="4"
-              >
-                <div style={{ color: 'slategrey', fontSize: 15 }}>
-                  <span paddingBottom="2">
-                    Posted by
-                    <span style={{ fontWeight: 'bold' }}>
-                    {' '}{post.username}{' '}
+          {filteredPosts &&
+            filteredPosts.map(post => {
+              return (
+                <Box
+                  value={post.id}
+                  backgroundColor="lightblue"
+                  borderRadius="6px"
+                  padding="4"
+                  margin="4"
+                  maxWidth="100%"
+                >
+                  <div style={{ color: 'slategrey', fontSize: 15 }}>
+                    <span paddingBottom="2">
+                      Posted by
+                      <span style={{ fontWeight: 'bold' }}>
+                        {' '}
+                        {post.username}{' '}
+                      </span>
+                      on
+                      <span style={{ fontWeight: 'bold' }}>
+                        {' '}
+                        {dayjs(post.created_at).toString()}
+                      </span>
                     </span>
-                    on
-                    <span style={{ fontWeight: 'bold' }}>
-                      {' '}
-                      {dayjs(post.created_at).toString()}
-                    </span>
-                  </span>
-                </div>
+                  </div>
 
-                <p style={{ color: 'black', fontSize: 20, paddingTop: 4 }}>
-                  {post.content}
-                </p>
-              </Box>
-            );
-          })}
+                  <p style={{ color: 'black', fontSize: 20, paddingTop: 4 }}>
+                    {post.content}
+                  </p>
+                </Box>
+              );
+            })}
         </VStack>
       </Container>
 
@@ -179,28 +202,48 @@ export const PostFeed = () => {
               </Container>
             </Box>
             <Container>
-              <Modal isOpen={isOpen} onClose={onClose}>
+              <Modal
+                isOpen={isOpen}
+                onClose={onClose}
+                initialFocusRef={initialRef}
+                finalFocusRef={finalRef}
+              >
                 <ModalOverlay />
                 <ModalContent>
-                  <ModalHeader>Let Your Voice Be Heard...</ModalHeader>
+                  <ModalHeader>New Post</ModalHeader>
                   <ModalCloseButton />
-                  <ModalBody>
-                    <Textarea
-                      value={value}
-                      onChange={handleInputChange}
-                      minWidth="95%"
-                      marginLeft="2"
-                      type="text"
-                      size="lg"
-                      width="auto"
-                    />
-                  </ModalBody>
+                  <form>
+                    <FormControl>
+                      <ModalBody>
+                        <FormLabel>Let Your Voice Be Heard...</FormLabel>
+                        <Textarea
+                          as="input"
+                          ref={initialRef}
+                          value={value}
+                          onChange={handleInputChange}
+                          minWidth="95%"
+                          marginLeft="2"
+                          type="text"
+                          size="lg"
+                          width="auto"
+                        />
+                      </ModalBody>
 
-                  <ModalFooter>
-                    <Button onClick={handleSubmitPost} colorScheme="teal">
-                      Submit Post
-                    </Button>
-                  </ModalFooter>
+                      <ModalFooter>
+                        <Button
+                          type="submit"
+                          onClick={e => {
+                            console.log('click sub');
+                            e.preventDefault();
+                            handleSubmitPost();
+                          }}
+                          colorScheme="teal"
+                        >
+                          Submit Post
+                        </Button>
+                      </ModalFooter>
+                    </FormControl>
+                  </form>
                 </ModalContent>
               </Modal>
             </Container>

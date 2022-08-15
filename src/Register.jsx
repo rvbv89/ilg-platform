@@ -69,7 +69,7 @@ export const Register = () => {
                     // }
                     pointerEvents="none"
                   />
-                  <Input type="text" ref={usernameRef} placeholder="Username" />
+                  <Input ref={usernameRef} placeholder="Username" />
                 </InputGroup>
               </FormControl>
               <FormControl>

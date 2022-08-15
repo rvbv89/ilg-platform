@@ -12,6 +12,8 @@
 /build
 
 # misc
+sql_scratch.js
+sql_scratch.sql
 .DS_Store
 .env.local
 .env.development.local

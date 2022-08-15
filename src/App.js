@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { ProtectedRoute } from './routes/ProtectedRoute';
+
 import '@fontsource/barlow';
 import {
   ChakraProvider,
@@ -37,9 +37,17 @@ function App() {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { data, error, isLoading } = useFetchMessagesQuery();
   const dispatch = useDispatch();
-  let user = useSelector(state => state.users.currentUser)
-  let isLoggedIn = useSelector(state => state.users.isLoggedIn)
-  
+  let user = useSelector(state => state.users.currentUser);
+  let isLoggedIn = useSelector(state => state.users.isLoggedIn);
+
+  // supabase.auth.onAuthStateChange((event, session) => {
+  //   console.log(event, session.user.user_metadata.username)
+  //   let username = session.user.user_metadata.username;
+  //   if (username !== user.user_metadata.username){
+  //     console.log('current username')
+  //   }
+  // })
+
   useEffect(() => {
     const fetchPosts = async () => {
       let { data: messages, error } = await supabase
@@ -55,33 +63,36 @@ function App() {
   }, [currentFeed]);
 
   useEffect(() => {
-    if (isLoggedIn === false) {
-      return
-    } else {
     const postsListener = supabase
       .from('messages')
       .on('INSERT', payload => {
-        console.log('new message', payload.new);
+        console.log('insert listener')
+        console.log(payload);
         dispatch(addNewPost(payload.new));
       })
-      .subscribe((status, e) => {
-        console.log('status', status, e);
-        if (status == 'RETRYING_AFTER_TIMEOUT') {
-          console.log('retrying subscription');
-        } else if (status == 'SUBSCRIBED') {
-          console.log('subscribed');
-        }
-      });
+      // .subscribe();
+    .subscribe((status, e) => {
+      console.log('status', status, e);
+      if (status == 'RETRYING_AFTER_TIMEOUT') {
+        console.log('retrying subscription');
+      } else if (status == 'SUBSCRIBED') {
+        console.log('subscribed');
+      } else if (status == 'SUBSCRIPTION_ERROR') {
+        console.log(status);
+      }
+    });
 
     return () => {
       supabase.removeSubscription(postsListener);
     };
-  }
-  }, [isLoggedIn]);
+  }, []);
 
   return (
     <ChakraProvider theme={theme}>
-      <Home />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </ChakraProvider>
   );
 }
