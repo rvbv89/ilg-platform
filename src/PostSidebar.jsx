@@ -43,6 +43,7 @@ export const PostSidebar = () => {
           {feedIds.map(id => {
             return (
               <Button
+                padding={['2', '4', '4', '4']}
                 value={id}
                 onClick={e => {
                   dispatch(currentFeed(e.target.value));
@@ -55,8 +56,10 @@ export const PostSidebar = () => {
           })}
         </VStack>
       </ButtonGroup>
-      <Divider visibility={["visible", "visible", "hidden", "hidden"]} marginY="4" />
-      
+      <Divider
+        visibility={['visible', 'visible', 'hidden', 'hidden']}
+        marginY="4"
+      />
     </Box>
   );
 };

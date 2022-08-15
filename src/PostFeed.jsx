@@ -133,7 +133,7 @@ export const PostFeed = () => {
                   value={post.id}
                   backgroundColor="lightblue"
                   borderRadius="6px"
-                  padding="4"
+                  padding={['0.5', '4', '4','4']}
                   margin="4"
                   maxWidth="100%"
                 >

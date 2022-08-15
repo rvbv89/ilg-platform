@@ -27,7 +27,7 @@ export const Navbar = ({ onOpen }) => {
   return (
     <Box position="sticky">
       <Flex
-        minWidth="max-content"
+        minWidth="100vw"
         alignItems="center"
         gap="2"
         padding="2"
@@ -37,7 +37,10 @@ export const Navbar = ({ onOpen }) => {
         <Heading size="md" marginX="4">
           ilg-platform
         </Heading>
-        <Spacer />
+        <div visibility={['hidden', 'hidden', 'visible', 'visible']}>
+          <Spacer />
+        </div>
+
         {/* <Input type="search" placeholder="Search" width="96" marginX="4" /> */}
         <ButtonGroup gap="2">
           <Button colorScheme="teal" onClick={onOpen}>

@@ -53,7 +53,7 @@ export const SocialSidebar = () => {
           <>
             <h1 style={{ color: 'slategray', marginBottom: '.5em' }}>You</h1>
             <VStack>
-              <Box borderRadius="5px" backgroundColor="#EDF2F7" padding="4">
+              <Box borderRadius="5px" backgroundColor="#EDF2F7" padding={['2', '4', '4', '4']}>
                 <span style={{ fontWeight: 'bold' }}>{username}</span>
               </Box>
             </VStack>
@@ -67,7 +67,7 @@ export const SocialSidebar = () => {
                     <Box
                       borderRadius="5px"
                       backgroundColor="#EDF2F7"
-                      padding="4"
+                      padding={['2', '4', '4', '4']}
                     >
                       <span style={{ fontWeight: 'bold' }}>
                         {user.username}

@@ -42,9 +42,10 @@ export const AuthModal = ({ isOpen, onClose }) => {
           </ModalBody>
           <ModalFooter>
             <Text>
-              No Account? Register{' '}<Link to="/register">here</Link>
+              No Account? Register<Link color='teal' to="/register">{' '}here</Link>
             </Text>
-            <Button
+            <Button 
+            marginX='2'
               colorScheme="teal"
               onClick={() => {
                 onLogin(emailRef.current?.value, passwordRef.current?.value);
