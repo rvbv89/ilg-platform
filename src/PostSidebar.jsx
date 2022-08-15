@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Flex,
   Box,
+  Container,
   Text,
   Heading,
   ButtonGroup,
@@ -19,7 +20,7 @@ export const PostSidebar = () => {
   const dispatch = useDispatch();
 
   return (
-    <Box
+    <Container
       centerContent
       borderColor="lightgrey"
       maxHeight={{ base: '20em', lg: '30em' }}
@@ -60,6 +61,6 @@ export const PostSidebar = () => {
         visibility={['visible', 'visible', 'hidden', 'hidden']}
         marginY="4"
       />
-    </Box>
+    </Container>
   );
 };

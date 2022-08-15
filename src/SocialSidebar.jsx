@@ -34,7 +34,7 @@ export const SocialSidebar = () => {
   // }, [isLoggedIn, allUsers]);
 
   return (
-    <Box
+    <Container
     // display={["none", "none", "flex", "flex"]}
       centerContent
       borderColor="lightgrey"
@@ -79,6 +79,6 @@ export const SocialSidebar = () => {
           </>
         )}
       </Container>
-    </Box>
+    </Container>
   );
 };

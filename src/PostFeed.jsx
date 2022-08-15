@@ -102,7 +102,6 @@ export const PostFeed = () => {
       maxHeight={{ base: '30em', lg: '30em' }}
       minHeight={{ base: '20em', lg: '30em' }}
       maxWidth={'100%'}
-    
       marginTop={{ base: '4', lg: '4' }}
       borderRadius={'4px'}
       backgroundColor={'white'}
