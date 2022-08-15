@@ -108,6 +108,7 @@ export const PostFeed = () => {
       backgroundColor={'white'}
       overflowY="hidden"
     >
+        <Heading paddingBottom="4">{`#${currentFeedTitle}`}</Heading>
       <Container
         justifyContent="center"
         overflowY={'auto'}
@@ -124,7 +125,7 @@ export const PostFeed = () => {
           },
         }}
       >
-        <Heading paddingBottom="4">{`#${currentFeedTitle}`}</Heading>
+        {/* <Heading paddingBottom="4">{`#${currentFeedTitle}`}</Heading> */}
         <VStack>
           {filteredPosts &&
             filteredPosts.map(post => {
