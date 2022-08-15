@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { ProtectedRoute } from './routes/ProtectedRoute';
 import '@fontsource/barlow';
 import {
   ChakraProvider,
@@ -30,38 +29,37 @@ export const Home = () => {
     <ChakraProvider theme={theme}>
       <Container
         maxHeight="100vh"
-        maxWidth="100%"
+        maxWidth="100vw"
+
+        // maxWidth="100%"
+        // maxWidth="100%"
         // overflowY="hidden"
         // overflowX="hidden"
       >
-        <Box margin={0} minWidth="max-content" textAlign="center" fontSize="xl">
-          {/* templateColumns="repeat(4, 1fr)" margin={2} p={0} gap={4 */}
-
-          <AuthModal isOpen={isOpen} onClose={onClose} onToggle={onToggle} />
-          <Navbar onOpen={onOpen} />
-          <SimpleGrid templateColumns="repeat(3, 1fr)" templateRows="repeat(1, 1fr)">
-            <GridItem rowSpan={1}>
-              <Container>
-                <VStack>
-                  <PostSidebar />
-                  <Container
-                    centerContent
-                    padding="0"
-                    visibility={['visible', 'visible', 'visible', 'hidden']}
-                  >
-                    <SocialSidebar />
-                  </Container>
-                </VStack>
-              </Container>
-            </GridItem>
-            <GridItem rowSpan={1} colSpan={['2', '2', '1', '1']}>
-              <PostFeed />
-            </GridItem>
-            <GridItem visibility={['hidden', 'hidden', 'hidden', 'visible']}>
-              <SocialSidebar />
-            </GridItem>
-          </SimpleGrid>
-        </Box>
+        <AuthModal isOpen={isOpen} onClose={onClose} onToggle={onToggle} />
+        <Navbar onOpen={onOpen} />
+        <SimpleGrid columns={3} maxChildWidth="35%">
+          <GridItem>
+            <Container>
+              <VStack>
+                <PostSidebar />
+                <Container
+                  centerContent
+                  padding="0"
+                  visibility={['visible', 'visible', 'visible', 'hidden']}
+                >
+                  <SocialSidebar />
+                </Container>
+              </VStack>
+            </Container>
+          </GridItem>
+          <GridItem>
+            <PostFeed />
+          </GridItem>
+          <GridItem visibility={['hidden', 'hidden', 'hidden', 'visible']}>
+            <SocialSidebar />
+          </GridItem>
+        </SimpleGrid>
       </Container>
     </ChakraProvider>
   );
