@@ -43,12 +43,13 @@ export const SocialSidebar = () => {
       marginTop={{ base: '4', lg: '4' }}
       borderRadius={'4px'}
       backgroundColor={'white'}
-      paddingX="10"
+      // paddingX="10"
+      fontSize={['.85em', '1em', '1em', '1.25em']}
     >
       <Heading fontFamily="body" size="md" padding="4" color="lightslategray">
         Social
       </Heading>
-      <Container>
+      <Container centerContent>
         {isLoggedIn === true && (
           <>
             <h1 style={{ color: 'slategray', marginBottom: '.5em' }}>You</h1>
@@ -59,7 +60,7 @@ export const SocialSidebar = () => {
             </VStack>
 
             <Divider marginY="1.5" variant="solid" />
-            <h1 style={{ color: 'slategray', marginTop: '.5em' }}>Others</h1>
+            <h1 style={{ color: 'slategray', marginTop: '.5em'  }}>Others</h1>
             <VStack>
               {otherUsers &&
                 otherUsers.map(user => {

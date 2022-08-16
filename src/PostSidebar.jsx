@@ -28,6 +28,7 @@ export const PostSidebar = () => {
       marginTop={{ base: '4', lg: '4' }}
       borderRadius={'4px'}
       backgroundColor={'white'}
+     
     >
       <Heading
         fontFamily="body"
@@ -44,6 +45,7 @@ export const PostSidebar = () => {
           {feedIds.map(id => {
             return (
               <Button
+              fontSize={['.85em', '1em', '1em', '1.25em']}
                 padding={['2', '4', '4', '4']}
                 value={id}
                 onClick={e => {
