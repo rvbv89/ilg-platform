@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currentFeed: 'main',
+  currentFeed: 'general',
   allPosts: [],
   currentFeedPosts: [],
 };
