@@ -14,7 +14,7 @@ import {
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import { currentFeed } from './redux/postsSlice';
 
-const feedIds = ['main', 'finance', 'technology', 'music'];
+const feedIds = ['general', 'finance', 'technology', 'music'];
 
 export const PostSidebar = () => {
   const dispatch = useDispatch();
