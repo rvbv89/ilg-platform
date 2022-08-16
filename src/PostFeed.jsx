@@ -34,7 +34,7 @@ export const PostFeed = () => {
   let user = useSelector(state => state.users.currentUser);
   let isLoggedIn = useSelector(state => state.users.isLoggedIn);
 
-  const [render, setRender] = useState(false);
+  // const [render, setRender] = useState(false);
 
   //local state to render posts based on current feed
   const [filteredPosts, setFilteredPosts] = useState([]);
