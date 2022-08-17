@@ -5,6 +5,8 @@ import {
   Text,
   Heading,
   VStack,
+  HStack,
+  Spacer,
   Button,
   Container,
   Modal,
@@ -59,8 +61,10 @@ export const PostFeed = () => {
     if (posts === []) {
       console.log('posts empty');
     } else {
-      let currentTitle = currentFeedTitle;
-      let filteredPostArr = posts.filter(post => post.feed === currentTitle);
+      // let currentTitle = currentFeedTitle;
+      let filteredPostArr = posts.filter(
+        post => post.feed === currentFeedTitle
+      );
       setFilteredPosts(filteredPostArr);
       console.log(filteredPosts);
     }
@@ -86,9 +90,9 @@ export const PostFeed = () => {
     onClose();
   };
 
-  useEffect(() => {
-    setRender(!render);
-  }, [filteredPosts]);
+  // useEffect(() => {
+  //   setRender(!render);
+  // }, [filteredPosts]);
 
   return (
     // <Flex flexDirection="column" border="1px">
@@ -194,13 +198,17 @@ export const PostFeed = () => {
                 finalFocusRef={finalRef}
               >
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent minWidth={['250px', '250px', '700px', '900px']}>
                   <ModalHeader>New Post</ModalHeader>
                   <ModalCloseButton />
                   <form>
                     <FormControl>
                       <ModalBody>
-                        <FormLabel>Let Your Voice Be Heard...</FormLabel>
+                        <HStack>
+                          <FormLabel>Let Your Voice Be Heard...</FormLabel>
+                          {/* <div style={{marginLeft:"10em"}}></div> */}
+                        </HStack>
+
                         <Textarea
                           ref={initialRef}
                           value={value}
@@ -210,10 +218,19 @@ export const PostFeed = () => {
                           type="text"
                           size="lg"
                           width="auto"
+                          minHeight={['auto', 'auto', '300px']}
                         />
                       </ModalBody>
 
                       <ModalFooter>
+                        <Button marginX="2">
+                          {' '}
+                          <i class="fa-solid fa-image"></i>
+                        </Button>
+                        <Button marginX="2">
+                        <i class="fa-brands fa-youtube"></i>
+                        </Button>
+
                         <Button
                           type="submit"
                           onClick={e => {
