@@ -45,6 +45,7 @@ export const PostSidebar = () => {
           {feedIds.map(id => {
             return (
               <Button
+                key={id}
                 fontSize={['.85em', '1em', '1em', '1.25em']}
                 padding={['2', '4', '4', '4']}
                 value={id}

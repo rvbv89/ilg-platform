@@ -1,6 +1,14 @@
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
   Flex,
   Heading,
   Input,
@@ -13,6 +21,7 @@ import {
   FormControl,
   FormLabel,
   InputRightElement,
+  Divider,
 } from '@chakra-ui/react';
 import { useAuth } from './context/AuthProvider';
 // import { EmailIcon, LockIcon } from '@chakra-ui/icons';
@@ -105,6 +114,32 @@ export const Register = () => {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
+              <Divider />
+              {/* Optional Avatar Upload */}
+              <span>Upload An Avatar Image (Optional)</span>
+              <Popover>
+                <PopoverTrigger>
+                  <Button>Upload Image</Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverHeader>Select Avatar Image</PopoverHeader>
+                  <PopoverCloseButton />
+                  <PopoverBody>
+                    <FormControl>
+                      <InputGroup>
+                        <Input type="file" accept="image/png, image/jpeg" />
+                      </InputGroup>
+                    </FormControl>
+                  </PopoverBody>
+                  <PopoverFooter>
+                    <Button>
+                    <i class="fa-solid fa-check"></i>
+                    </Button>
+                  </PopoverFooter>
+                </PopoverContent>
+              </Popover>
+
               <Button
                 onClick={e => {
                   e.preventDefault();

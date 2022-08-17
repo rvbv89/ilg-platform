@@ -136,6 +136,7 @@ export const PostFeed = () => {
             filteredPosts.map(post => {
               return (
                 <Box
+                  key={post.id}
                   value={post.id}
                   backgroundColor="lightblue"
                   borderRadius="6px"
@@ -166,7 +167,7 @@ export const PostFeed = () => {
             })}
         </VStack>
       </Container>
-      {/* Conditionally rendered compose post button */}
+      {/* Conditionally rendered compose post button based on auth status */}
       <Container paddingTop="6">
         {isLoggedIn === true && (
           <>
@@ -223,54 +224,54 @@ export const PostFeed = () => {
                       <ModalFooter>
                         {/* Media Buttons */}
                         <Popover>
-                        <PopoverTrigger>
-                        <Button marginX="2">
-                          {' '}
-                          <i class="fa-solid fa-image"></i>
-                        </Button>
-                        </PopoverTrigger>
-                       
-                       
-                        
+                          <PopoverTrigger>
+                            <Button id="uploadImage" marginX="2">
+                              {' '}
+                              <i class="fa-solid fa-image"></i>
+                            </Button>
+                          </PopoverTrigger>
+
                           {/* <Portal> */}
-                            <PopoverContent>
-                              <PopoverArrow />
-                              <PopoverHeader>Upload Image:</PopoverHeader>
-                              <PopoverCloseButton />
-                              <PopoverBody>
-                              <Input type="file" id="image-input" accept="image/jpeg, image/png, image/jpg"/>
-                              </PopoverBody>
-                              <PopoverFooter>
-                                <Button>
+                          <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverHeader>Upload Image</PopoverHeader>
+                            <PopoverCloseButton />
+                            <PopoverBody>
+                              <Input
+                                type="file"
+                                id="image-input"
+                                accept="image/jpeg, image/png, image/jpg"
+                              />
+                            </PopoverBody>
+                            <PopoverFooter>
+                              <Button>
                                 <i class="fa-solid fa-circle-check"></i>
-                                </Button>
-                              </PopoverFooter>
-                            </PopoverContent>
+                              </Button>
+                            </PopoverFooter>
+                          </PopoverContent>
                           {/* </Portal> */}
                         </Popover>
                         <Popover>
-                        <PopoverTrigger>
-                          <Button marginX="2">
-                            <i class="fa-brands fa-youtube"></i>
-                          </Button>
-                        </PopoverTrigger>
-                        {/* Youtube embed popover */}
-                        
-                         
-                            <PopoverContent>
-                              <PopoverArrow />
-                              <PopoverHeader>Enter YouTube URL:</PopoverHeader>
-                              <PopoverCloseButton />
-                              <PopoverBody>
-                                <Input type="text"/>
-                              </PopoverBody>
-                              <PopoverFooter>
-                                <Button>
+                          <PopoverTrigger>
+                            <Button id="shareYouTube" marginX="2">
+                              <i class="fa-brands fa-youtube"></i>
+                            </Button>
+                          </PopoverTrigger>
+                          {/* Youtube embed popover */}
+
+                          <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverHeader>Enter YouTube URL:</PopoverHeader>
+                            <PopoverCloseButton />
+                            <PopoverBody>
+                              <Input type="text" />
+                            </PopoverBody>
+                            <PopoverFooter>
+                              <Button>
                                 <i class="fa-solid fa-circle-check"></i>
-                                </Button>
-                              </PopoverFooter>
-                            </PopoverContent>
-                          
+                              </Button>
+                            </PopoverFooter>
+                          </PopoverContent>
                         </Popover>
                         {/* Submit Post Button */}
                         <Button
