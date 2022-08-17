@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useRef, useState } from 'react';
 import {
   Popover,
   PopoverTrigger,
@@ -22,8 +21,11 @@ import {
   FormLabel,
   InputRightElement,
   Divider,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useAuth } from './context/AuthProvider';
+import { supabase } from './supabase/init';
+import { once } from '@chakra-ui/utils';
 // import { EmailIcon, LockIcon } from '@chakra-ui/icons';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -31,14 +33,43 @@ export const Register = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const usernameRef = useRef();
+  const avatarRef = useRef();
 
   const { onRegister } = useAuth();
 
   const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
-  } = useForm();
+    getDisclosureProps,
+    getButtonProps,
+    onClose,
+    isOpen,
+    onToggle,
+    onOpen,
+  } = useDisclosure();
+  const buttonProps = getButtonProps();
+  const disclosureProps = getDisclosureProps();
+
+  const [avatarVal, setAvatarVal] = useState();
+
+  const handleUploadAvatar = async () => {
+    // const avatarFile = e.target.file[0]
+
+    if (avatarVal === undefined) {
+      window.alert('Please select an image to upload');
+    } else {
+      const avatarFile = avatarVal;
+      const avatarFileExt = avatarFile.name.split('.').pop();
+      const avatarFileName = `${Math.random()}.${avatarFileExt}`;
+      const avatarFilePath = `${avatarFileName}`;
+      const { data, error } = await supabase.storage
+        .from('avatars')
+        .upload(avatarFilePath, avatarFile, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+      console.log('next');
+      onClose();
+    }
+  };
 
   return (
     <Flex
@@ -55,7 +86,7 @@ export const Register = () => {
         alignItems="center"
       >
         <Box maxW={{ base: '90%', md: '50em' }}>
-          <form onSubmit={handleSubmit(onRegister)}>
+          <form onSubmit={onRegister}>
             <Stack rounded="md" spacing={4} p="2rem" boxShadow="md">
               <Heading fontSize="2xl" fontWeight="normal">
                 Please enter a valid email, username and password to complete
@@ -117,24 +148,30 @@ export const Register = () => {
               <Divider />
               {/* Optional Avatar Upload */}
               <span>Upload An Avatar Image (Optional)</span>
-              <Popover>
+              <Popover isOpen={isOpen}>
                 <PopoverTrigger>
-                  <Button>Upload Image</Button>
+                  <Button onClick={onOpen}>Upload Image</Button>
                 </PopoverTrigger>
                 <PopoverContent>
                   <PopoverArrow />
                   <PopoverHeader>Select Avatar Image</PopoverHeader>
-                  <PopoverCloseButton />
+                  <PopoverCloseButton onClick={onClose} />
                   <PopoverBody>
                     <FormControl>
                       <InputGroup>
-                        <Input type="file" accept="image/png, image/jpeg" />
+                        <Input
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          onChange={e => {
+                            setAvatarVal(e.target.files[0]);
+                          }}
+                        />
                       </InputGroup>
                     </FormControl>
                   </PopoverBody>
                   <PopoverFooter>
-                    <Button>
-                    <i class="fa-solid fa-check"></i>
+                    <Button onClick={handleUploadAvatar}>
+                      <i class="fa-solid fa-check"></i>
                     </Button>
                   </PopoverFooter>
                 </PopoverContent>
