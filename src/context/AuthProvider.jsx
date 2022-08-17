@@ -6,7 +6,6 @@ import {
   currentUsername,
   logoutCurrentUser,
 } from '../redux/usersSlice';
-import { set } from 'lodash';
 
 const AuthContext = React.createContext();
 
@@ -16,6 +15,7 @@ export function useAuth() {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  // TODO revisit
   // const [authStatus, setAuthStatus] = useState(
   //   localStorage.getItem('authStatus') || false
   // );
@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }) => {
         },
         {
           data: {
-           username: username
+            username: username,
           },
         }
       );

@@ -1,5 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  Portal,
+  Input,
   Flex,
   Box,
   Text,
@@ -28,9 +39,10 @@ import { supabase } from './supabase/init';
 import dayjs, { Dayjs } from 'dayjs';
 
 export const PostFeed = () => {
+  // define dispatch var for redux hook
   const dispatch = useDispatch();
-  //define vars for redux state
 
+  // define vars for redux state
   let currentFeedTitle = useSelector(state => state.posts.currentFeed);
   let posts = useSelector(state => state.posts.allPosts);
   let user = useSelector(state => state.users.currentUser);
@@ -38,30 +50,25 @@ export const PostFeed = () => {
 
   // const [render, setRender] = useState(false);
 
-  //local state to render posts based on current feed
+  // local state to render posts based on current feed
   const [filteredPosts, setFilteredPosts] = useState([]);
 
-  //local state for user post input value
+  // local state for user post input value
   const [value, setValue] = useState('');
 
-  //Post submission modal props
+  // Post submission modal props
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  //refs for post input modal focus
+  // refs for post input modal focus
   const initialRef = useRef(null);
   const finalRef = useRef(null);
 
-  useEffect(() => {
-    console.log(user);
-  }, []);
-
-  //effect to set the current feed and posts displayed based on
-  //posts available in redux store
+  // effect to set the current feed and posts displayed based on
+  // posts available in redux store
   useEffect(() => {
     if (posts === []) {
       console.log('posts empty');
     } else {
-      // let currentTitle = currentFeedTitle;
       let filteredPostArr = posts.filter(
         post => post.feed === currentFeedTitle
       );
@@ -90,12 +97,7 @@ export const PostFeed = () => {
     onClose();
   };
 
-  // useEffect(() => {
-  //   setRender(!render);
-  // }, [filteredPosts]);
-
   return (
-    // <Flex flexDirection="column" border="1px">
     <Box
       boxSizing="border-box"
       display="flex"
@@ -128,7 +130,7 @@ export const PostFeed = () => {
           },
         }}
       >
-        {/* <Heading paddingBottom="4">{`#${currentFeedTitle}`}</Heading> */}
+        {/* Vertically arranged posts */}
         <VStack>
           {filteredPosts &&
             filteredPosts.map(post => {
@@ -164,7 +166,7 @@ export const PostFeed = () => {
             })}
         </VStack>
       </Container>
-
+      {/* Conditionally rendered compose post button */}
       <Container paddingTop="6">
         {isLoggedIn === true && (
           <>
@@ -191,6 +193,7 @@ export const PostFeed = () => {
               </Container>
             </Box>
             <Container>
+              {/* Post composition modal */}
               <Modal
                 isOpen={isOpen}
                 onClose={onClose}
@@ -204,11 +207,7 @@ export const PostFeed = () => {
                   <form>
                     <FormControl>
                       <ModalBody>
-                        <HStack>
-                          <FormLabel>Let Your Voice Be Heard...</FormLabel>
-                          {/* <div style={{marginLeft:"10em"}}></div> */}
-                        </HStack>
-
+                        <FormLabel>Let Your Voice Be Heard...</FormLabel>
                         <Textarea
                           ref={initialRef}
                           value={value}
@@ -221,16 +220,59 @@ export const PostFeed = () => {
                           minHeight={['auto', 'auto', '300px']}
                         />
                       </ModalBody>
-
                       <ModalFooter>
+                        {/* Media Buttons */}
+                        <Popover>
+                        <PopoverTrigger>
                         <Button marginX="2">
                           {' '}
                           <i class="fa-solid fa-image"></i>
                         </Button>
-                        <Button marginX="2">
-                        <i class="fa-brands fa-youtube"></i>
-                        </Button>
-
+                        </PopoverTrigger>
+                       
+                       
+                        
+                          {/* <Portal> */}
+                            <PopoverContent>
+                              <PopoverArrow />
+                              <PopoverHeader>Upload Image:</PopoverHeader>
+                              <PopoverCloseButton />
+                              <PopoverBody>
+                              <Input type="file" id="image-input" accept="image/jpeg, image/png, image/jpg"/>
+                              </PopoverBody>
+                              <PopoverFooter>
+                                <Button>
+                                <i class="fa-solid fa-circle-check"></i>
+                                </Button>
+                              </PopoverFooter>
+                            </PopoverContent>
+                          {/* </Portal> */}
+                        </Popover>
+                        <Popover>
+                        <PopoverTrigger>
+                          <Button marginX="2">
+                            <i class="fa-brands fa-youtube"></i>
+                          </Button>
+                        </PopoverTrigger>
+                        {/* Youtube embed popover */}
+                        
+                         
+                            <PopoverContent>
+                              <PopoverArrow />
+                              <PopoverHeader>Enter YouTube URL:</PopoverHeader>
+                              <PopoverCloseButton />
+                              <PopoverBody>
+                                <Input type="text"/>
+                              </PopoverBody>
+                              <PopoverFooter>
+                                <Button>
+                                <i class="fa-solid fa-circle-check"></i>
+                                </Button>
+                              </PopoverFooter>
+                            </PopoverContent>
+                          
+                        </Popover>
+                        {/* Submit Post Button */}
                         <Button
                           type="submit"
                           onClick={e => {
@@ -252,7 +294,5 @@ export const PostFeed = () => {
         )}
       </Container>
     </Box>
-
-    // </Flex>
   );
 };
