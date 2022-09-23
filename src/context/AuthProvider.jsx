@@ -107,6 +107,7 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
+      alert('Please check your email for a confirmation link. Thanks!')
       if (error) {
         console.log(error);
         alert(error.message);
