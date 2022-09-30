@@ -49,7 +49,8 @@ export const Register = () => {
   const buttonProps = getButtonProps();
   const disclosureProps = getDisclosureProps();
 
-  const [avatarVal, setAvatarVal] = useState();
+  const [avatarVal, setAvatarVal] = useState('');
+  const [avatarPreviewVal, setAvatarPreviewVal] = useState('');
 
   const handleUploadAvatar = async () => {
     // const avatarFile = e.target.file[0]
@@ -164,15 +165,26 @@ export const Register = () => {
                           type="file"
                           accept="image/png, image/jpeg"
                           onChange={e => {
-                            setAvatarVal(e.target.files[0]);
+                            const reader = new FileReader();
+                            reader.readAsDataURL(e.target.files[0]);
+                            reader.onload = () => {
+                              console.log(reader.result);
+                              setAvatarPreviewVal(reader.result);
+                            };
                           }}
                         />
-                        <UserAvatar  />
+                        <UserAvatar avatarPreviewVal={avatarPreviewVal} />
                       </InputGroup>
                     </FormControl>
                   </PopoverBody>
                   <PopoverFooter>
-                    <Button onClick={handleUploadAvatar}>
+                    <Button
+                      onClick={() => {
+                        onClose();
+                        setAvatarVal(avatarPreviewVal);
+                        setAvatarPreviewVal('');
+                      }}
+                    >
                       <i class="fa-solid fa-check"></i>
                     </Button>
                   </PopoverFooter>
