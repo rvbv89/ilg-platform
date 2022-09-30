@@ -49,8 +49,9 @@ export const Register = () => {
   const buttonProps = getButtonProps();
   const disclosureProps = getDisclosureProps();
 
-  const [avatarVal, setAvatarVal] = useState('');
-  const [avatarPreviewVal, setAvatarPreviewVal] = useState('');
+  const [avatarVal, setAvatarVal] = useState();
+  // const [avatarPreviewVal, setAvatarPreviewVal] = useState('');
+  const [toggleLargeAvatar, setToggleLargeAvatar] = useState(false)
 
   const handleUploadAvatar = async () => {
     // const avatarFile = e.target.file[0]
@@ -150,6 +151,7 @@ export const Register = () => {
               <Divider />
               {/* Optional Avatar Upload */}
               <span>Upload An Avatar Image (Optional)</span>
+             { toggleLargeAvatar && <UserAvatar avatarVal={avatarVal}/>}
               <Popover isOpen={isOpen}>
                 <PopoverTrigger>
                   <Button onClick={onOpen}>Upload Image</Button>
@@ -169,11 +171,11 @@ export const Register = () => {
                             reader.readAsDataURL(e.target.files[0]);
                             reader.onload = () => {
                               console.log(reader.result);
-                              setAvatarPreviewVal(reader.result);
+                              setAvatarVal(reader.result);
                             };
                           }}
                         />
-                        <UserAvatar avatarPreviewVal={avatarPreviewVal} />
+                        <UserAvatar avatarVal={avatarVal} />
                       </InputGroup>
                     </FormControl>
                   </PopoverBody>
@@ -181,8 +183,7 @@ export const Register = () => {
                     <Button
                       onClick={() => {
                         onClose();
-                        setAvatarVal(avatarPreviewVal);
-                        setAvatarPreviewVal('');
+                        setToggleLargeAvatar(true)
                       }}
                     >
                       <i class="fa-solid fa-check"></i>
