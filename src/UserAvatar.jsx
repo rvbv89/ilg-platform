@@ -1,6 +1,5 @@
 import React from 'react';
 import { Avatar, AvatarBadge, AvatarGroup } from '@chakra-ui/react';
-import { useEffect } from 'react';
 
 export const UserAvatar = ({ avatarVal }) => {
   return avatarVal ? (
