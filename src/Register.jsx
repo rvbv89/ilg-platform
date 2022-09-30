@@ -24,6 +24,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useAuth } from './context/AuthProvider';
+import { UserAvatar } from './UserAvatar';
 import { supabase } from './supabase/init';
 import { once } from '@chakra-ui/utils';
 // import { EmailIcon, LockIcon } from '@chakra-ui/icons';
@@ -60,12 +61,12 @@ export const Register = () => {
       const avatarFileExt = avatarFile.name.split('.').pop();
       const avatarFileName = `${Math.random()}.${avatarFileExt}`;
       const avatarFilePath = `${avatarFileName}`;
-      const { data, error } = await supabase.storage
-        .from('avatars')
-        .upload(avatarFilePath, avatarFile, {
-          cacheControl: '3600',
-          upsert: false,
-        });
+      // const { data, error } = await supabase.storage
+      //   .from('avatars')
+      //   .upload(avatarFilePath, avatarFile, {
+      //     cacheControl: '3600',
+      //     upsert: false,
+      //   });
       console.log('next');
       onClose();
     }
@@ -166,6 +167,7 @@ export const Register = () => {
                             setAvatarVal(e.target.files[0]);
                           }}
                         />
+                        <UserAvatar  />
                       </InputGroup>
                     </FormControl>
                   </PopoverBody>
