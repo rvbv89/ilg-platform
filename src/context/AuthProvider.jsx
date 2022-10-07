@@ -6,6 +6,8 @@ import {
   currentUsername,
   logoutCurrentUser,
 } from '../redux/usersSlice';
+import { decode } from 'base64-arraybuffer';
+require('base64-js');
 
 const AuthContext = React.createContext();
 
@@ -53,6 +55,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
+      console.log(password)
       if (error) {
         console.log(error);
         alert(error.message);
@@ -92,6 +95,7 @@ export const AuthProvider = ({ children }) => {
     setIsSignedIn(false);
   };
 
+  // Register new user
   const handleRegister = async (username, email, password) => {
     if (!username || !email || !password) {
       alert('Please Complete All Fields');
@@ -107,7 +111,8 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
-      alert('Please check your email for a confirmation link. Thanks!')
+
+      alert('Please check your email for a confirmation link. Thanks!');
       if (error) {
         console.log(error);
         alert(error.message);
@@ -115,10 +120,30 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const handleAvatarUpload = async avatar => {
+    if (avatar !== undefined) {
+      const avatarFile = avatar;
+      console.log(avatarFile);
+      const avatarFileExt = avatarFile.split('.').pop();
+      const avatarFileName = `${Math.random()}.${avatarFileExt}`;
+      const avatarFilePath = `${avatarFileName}`;
+      const decodeAvatarFile = decode(avatarFile);
+      const { data, error } = await supabase.storage
+        .from('avatars')
+        .upload(avatarFilePath, decodeAvatarFile, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+      console.log('next');
+      console.log(error)
+    };
+  };
+
   const value = {
     onLogin: handleLogin,
     onLogout: handleLogout,
     onRegister: handleRegister,
+    onAvatarUpload: handleAvatarUpload,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -36,7 +36,7 @@ export const Register = () => {
   const usernameRef = useRef();
   const avatarRef = useRef();
 
-  const { onRegister } = useAuth();
+  const { onRegister, onAvatarUpload } = useAuth();
 
   const {
     getDisclosureProps,
@@ -51,7 +51,7 @@ export const Register = () => {
 
   const [avatarVal, setAvatarVal] = useState();
   // const [avatarPreviewVal, setAvatarPreviewVal] = useState('');
-  const [toggleLargeAvatar, setToggleLargeAvatar] = useState(false)
+  const [toggleLargeAvatar, setToggleLargeAvatar] = useState(false);
 
   const handleUploadAvatar = async () => {
     // const avatarFile = e.target.file[0]
@@ -63,12 +63,12 @@ export const Register = () => {
       const avatarFileExt = avatarFile.name.split('.').pop();
       const avatarFileName = `${Math.random()}.${avatarFileExt}`;
       const avatarFilePath = `${avatarFileName}`;
-      // const { data, error } = await supabase.storage
-      //   .from('avatars')
-      //   .upload(avatarFilePath, avatarFile, {
-      //     cacheControl: '3600',
-      //     upsert: false,
-      //   });
+      const { data, error } = await supabase.storage
+        .from('avatars')
+        .upload(avatarFilePath, avatarFile, {
+          cacheControl: '3600',
+          upsert: false,
+        });
       console.log('next');
       onClose();
     }
@@ -151,7 +151,7 @@ export const Register = () => {
               <Divider />
               {/* Optional Avatar Upload */}
               <span>Upload An Avatar Image (Optional)</span>
-             { toggleLargeAvatar && <UserAvatar avatarVal={avatarVal}/>}
+              {toggleLargeAvatar && <UserAvatar avatarVal={avatarVal} />}
               <Popover isOpen={isOpen}>
                 <PopoverTrigger>
                   <Button onClick={onOpen}>Upload Image</Button>
@@ -183,7 +183,7 @@ export const Register = () => {
                     <Button
                       onClick={() => {
                         onClose();
-                        setToggleLargeAvatar(true)
+                        setToggleLargeAvatar(true);
                       }}
                     >
                       <i class="fa-solid fa-check"></i>
@@ -195,12 +195,13 @@ export const Register = () => {
               <Button
                 onClick={e => {
                   e.preventDefault();
-                  console.log(passwordRef.current.value);
                   onRegister(
                     usernameRef.current?.value,
                     emailRef.current?.value,
-                    passwordRef.current?.value
+                    passwordRef.current?.value,
+                    avatarVal
                   );
+                  onAvatarUpload(avatarVal)
                 }}
                 borderRadius={6}
                 type="submit"
