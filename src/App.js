@@ -39,7 +39,7 @@ function App() {
   const { data, error, isLoading } = useFetchMessagesQuery();
   const dispatch = useDispatch();
   let user = useSelector(state => state.users.currentUser);
-  let username = useSelector(state => state.users.currentUsername)
+  let username = useSelector(state => state.users.currentUsername);
   let isLoggedIn = useSelector(state => state.users.isLoggedIn);
 
   // supabase.auth.onAuthStateChange((event, session) => {
@@ -51,23 +51,21 @@ function App() {
   // })
 
   useEffect(() => {
-    if (isLoggedIn === false){
-      return
-    } else {  
+    if (isLoggedIn === false) {
+      return;
+    } else {
       const fetchUsers = async () => {
-      let { data, error } = await supabase.from('users')
-      .select('username')
-      .not('username', 'eq', username)
-      console.log(data);
-      dispatch(getAllOtherUsers(data));
-      if (error) {
-        console.log(error);
-      }
-    };
-    fetchUsers()
-  }
-  
-    
+        let { data, error } = await supabase
+          .from('users')
+          .select('username')
+          .not('username', 'eq', username);
+        dispatch(getAllOtherUsers(data));
+        if (error) {
+          console.log(error);
+        }
+      };
+      fetchUsers();
+    }
   }, [isLoggedIn]);
 
   useEffect(() => {
@@ -75,7 +73,6 @@ function App() {
       let { data: messages, error } = await supabase
         .from('messages')
         .select('*');
-      console.log('fetch effect');
       dispatch(addAllPosts(messages));
       if (error) {
         console.log(error);
@@ -92,7 +89,6 @@ function App() {
         console.log(payload);
         dispatch(addNewPost(payload.new));
       })
-      // .subscribe();
       .subscribe((status, e) => {
         console.log('status', status, e);
         if (status == 'RETRYING_AFTER_TIMEOUT') {
@@ -111,7 +107,6 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-    
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />

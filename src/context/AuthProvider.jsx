@@ -16,17 +16,10 @@ export function useAuth() {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  // const [authStatus, setAuthStatus] = useState(
-  //   localStorage.getItem('authStatus') || false
-  // );
   let { isLoggedIn } = useSelector(state => state.users.isLoggedIn);
   const [isSignedIn, setIsSignedIn] = useState(false);
   //Define dispatch var
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   //Listen to auth changes
 
@@ -35,12 +28,10 @@ export const AuthProvider = ({ children }) => {
       if (event == 'SIGNED_OUT') {
         console.log(event);
       } else {
-        console.log(event, session.user);
         localStorage.setItem('authStatus', true);
         setUser(session.user.id);
       }
     });
-    console.log('auth effect');
   }, []);
 
   // Login user
@@ -76,7 +67,6 @@ export const AuthProvider = ({ children }) => {
       dispatch(currentUsername(username));
       setIsSignedIn(true);
     }
-    console.log(isSignedIn);
   }, []);
 
   // useEffect(()=>{
@@ -103,11 +93,11 @@ export const AuthProvider = ({ children }) => {
         },
         {
           data: {
-           username: username
+            username: username,
           },
         }
       );
-      alert('Please check your email for a confirmation link. Thanks!')
+      alert('Please check your email for a confirmation link. Thanks!');
       if (error) {
         console.log(error);
         alert(error.message);

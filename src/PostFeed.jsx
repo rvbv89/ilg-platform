@@ -49,10 +49,6 @@ export const PostFeed = () => {
   const initialRef = useRef(null);
   const finalRef = useRef(null);
 
-  useEffect(() => {
-    console.log(user);
-  }, []);
-
   //effect to set the current feed and posts displayed based on
   //posts available in redux store
   useEffect(() => {
@@ -62,7 +58,6 @@ export const PostFeed = () => {
       let currentTitle = currentFeedTitle;
       let filteredPostArr = posts.filter(post => post.feed === currentTitle);
       setFilteredPosts(filteredPostArr);
-      console.log(filteredPosts);
     }
   }, [posts, currentFeedTitle]);
 
