@@ -12,9 +12,11 @@ import {
   FormLabel,
   Input,
   Text,
+  
 } from '@chakra-ui/react';
 import { Route, Link } from 'react-router-dom';
 import { useAuth } from './context/AuthProvider';
+
 
 export const AuthModal = ({ isOpen, onClose }) => {
   const { onLogin } = useAuth();
@@ -24,14 +26,11 @@ export const AuthModal = ({ isOpen, onClose }) => {
   const initialRef = useRef(null);
   const finalRef = useRef(null);
 
+  // const { user } = useHandleLoginPMutation('garzotto5389@gmail.com', 'password')
+
   return (
     <div>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-      >
+      <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef} finalFocusRef={finalRef}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Please Sign In To Your Account</ModalHeader>
@@ -46,14 +45,10 @@ export const AuthModal = ({ isOpen, onClose }) => {
           </ModalBody>
           <ModalFooter>
             <Text>
-              No Account? Register
-              <Link color="teal" to="/register">
-                {' '}
-                here
-              </Link>
+              No Account? Register<Link color='teal' to="/register">{' '}here</Link>
             </Text>
-            <Button
-              marginX="2"
+            <Button 
+            marginX='2'
               colorScheme="teal"
               onClick={() => {
                 onLogin(emailRef.current?.value, passwordRef.current?.value);
