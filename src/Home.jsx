@@ -25,7 +25,7 @@ export const Home = () => {
         maxWidth="100vw"
         // maxWidth="100%"
         // maxWidth="100%"
-        overflowY="auto"
+        overflowY="hidden"
         // overflowX="hidden"
       >
         <AuthModal isOpen={isOpen} onClose={onClose} onToggle={onToggle} />
@@ -33,7 +33,36 @@ export const Home = () => {
         <SimpleGrid columns={3} maxChildWidth="35%">
           <GridItem>
             <Container
-              maxHeight={['100vh', '100vh', 'none', 'none']}
+              
+              overflowY={"auto"}
+              css={{
+                '&::-webkit-scrollbar': {
+                  width: '6px',
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '8px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: 'slategrey',
+                  borderRadius: '24px',
+                },
+              }}
+            >
+              <VStack overflowX="hidden" overflowY={'auto'}>
+                <PostSidebar />
+                <Container
+                  centerContent
+                  padding="0"
+                  visibility={['visible', 'visible', 'visible', 'hidden']}
+                >
+                  <SocialSidebar />
+                </Container>
+              </VStack>
+            </Container>
+          </GridItem>
+          
+          <GridItem colSpan={['2', '2', '1', '1']}>
+          <Container
               overflowY={['auto', 'auto', 'auto', 'auto']}
               css={{
                 '&::-webkit-scrollbar': {
@@ -48,23 +77,27 @@ export const Home = () => {
                 },
               }}
             >
-              <VStack overflowX="hidden">
-                <PostSidebar />
-                <Container
-                  centerContent
-                  padding="0"
-                  visibility={['visible', 'visible', 'visible', 'hidden']}
-                >
-                  <SocialSidebar />
-                </Container>
-              </VStack>
+            <PostFeed />
             </Container>
           </GridItem>
-          <GridItem colSpan={['2', '2', '1', '1']}>
-            <PostFeed />
-          </GridItem>
-          <GridItem visibility={['hidden', 'hidden', 'hidden', 'visible']} >
-            <SocialSidebar />
+          <GridItem visibility={['hidden', 'hidden', 'hidden', 'visible']}>
+            <Container
+              overflowY={['auto', 'auto', 'auto', 'auto']}
+              css={{
+                '&::-webkit-scrollbar': {
+                  width: '6px',
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '8px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: 'slategrey',
+                  borderRadius: '24px',
+                },
+              }}
+            >
+              <SocialSidebar />
+            </Container>
           </GridItem>
         </SimpleGrid>
       </Container>

@@ -33,7 +33,7 @@ export const SocialSidebar = () => {
       <Heading fontFamily="body" size="md" padding="4" color="lightslategray">
         Social
       </Heading>
-      <Container centerContent overflowY='auto'>
+      <Container centerContent >
         {isLoggedIn === true && (
           <>
             <h1 style={{ color: 'slategray', marginBottom: '.5em' }}>You</h1>
