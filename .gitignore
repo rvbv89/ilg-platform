@@ -12,8 +12,10 @@
 /build
 
 # misc
+serviceWorker.js
 sql_scratch.js
 sql_scratch.sql
+sql_scratch.txt
 .DS_Store
 .env.local
 .env.development.local
