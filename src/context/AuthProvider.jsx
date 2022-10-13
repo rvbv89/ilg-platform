@@ -20,8 +20,9 @@ export const AuthProvider = ({ children }) => {
   // const [authStatus, setAuthStatus] = useState(
   //   localStorage.getItem('authStatus') || false
   // );
-  let { isLoggedIn } = useSelector(state => state.users.isLoggedIn);
+  // let { isLoggedIn } = useSelector(state => state.users.isLoggedIn);
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [resetEmailVal, setResetEmailVal] = useState();
   //Define dispatch var
   const dispatch = useDispatch();
 
@@ -142,17 +143,31 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const handleResetPassword = async (email) => {
-    const { data, error } = await supabase.auth.api.resetPasswordForEmail(email, {
-      redirectTo: 'https://localhost:3000.com/reset-password',
-    })
-  }
+  const handleRequestResetPassword = async email => {
+    let { data, error } = await supabase.auth.api.resetPasswordForEmail(
+      email,
+      {
+        redirectTo: 'https://localhost:3000.com/reset-password-form',
+      }
+    );
+  };
+
+  const handleResetPassword = async (email, password) => {
+    const { user, error } = await supabase.auth.update({
+      email: email,
+      password: password,
+    });
+    setResetEmailVal('')
+  };
 
   const value = {
     onLogin: handleLogin,
     onLogout: handleLogout,
     onRegister: handleRegister,
-    onResetPassword: handleResetPassword
+    onRequestResetPassword: handleRequestResetPassword,
+    onResetPassword: handleResetPassword,
+    email: resetEmailVal,
+    setEmail: setResetEmailVal,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
