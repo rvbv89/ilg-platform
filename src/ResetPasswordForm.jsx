@@ -16,7 +16,7 @@ import { useAuth } from './context/AuthProvider';
 
 export const ResetPasswordForm = () => {
   const passwordRef = useRef();
-  const { onResetPassword } = useAuth();
+  const { onResetPassword, setEmail, email } = useAuth();
   return (
     <Flex
       flexDirection="column"
@@ -41,7 +41,6 @@ export const ResetPasswordForm = () => {
               <FormControl id="email">
                 <InputGroup>
                   <Stack>
-                    
                     <Input
                       ref={passwordRef}
                       name="email"
@@ -62,7 +61,7 @@ export const ResetPasswordForm = () => {
                 colorScheme={'teal'}
                 onClick={e => {
                   e.preventDefault();
-                  onResetPassword(passwordRef);
+                  onResetPassword(email, passwordRef);
                 }}
               >
                 Reset

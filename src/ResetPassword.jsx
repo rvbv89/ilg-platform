@@ -12,11 +12,11 @@ import {
   Button,
   Link,
 } from '@chakra-ui/react';
-import { useAuth } from "./context/AuthProvider"
+import { useAuth } from './context/AuthProvider';
 
 export const ResetPassword = () => {
   const emailRef = useRef();
-  const { onResetPassword } = useAuth();
+  const { onRequestResetPassword, setEmail } = useAuth();
   return (
     <Flex
       flexDirection="column"
@@ -57,7 +57,9 @@ export const ResetPassword = () => {
                 colorScheme={'teal'}
                 onClick={e => {
                   e.preventDefault();
-                  onResetPassword(emailRef);
+                  console.log(emailRef.current?.value);
+                  onRequestResetPassword(emailRef.current?.value);
+                  setEmail(emailRef.current?.value);
                 }}
               >
                 Reset
