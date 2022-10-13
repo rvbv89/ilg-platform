@@ -6,7 +6,7 @@ import {
   currentUsername,
   logoutCurrentUser,
 } from '../redux/usersSlice';
-import { set } from 'lodash';
+import { decode } from 'base64-arraybuffer';
 
 const AuthContext = React.createContext();
 
@@ -16,10 +16,18 @@ export function useAuth() {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  // TODO revisit
+  // const [authStatus, setAuthStatus] = useState(
+  //   localStorage.getItem('authStatus') || false
+  // );
   let { isLoggedIn } = useSelector(state => state.users.isLoggedIn);
   const [isSignedIn, setIsSignedIn] = useState(false);
   //Define dispatch var
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   //Listen to auth changes
 
@@ -28,10 +36,12 @@ export const AuthProvider = ({ children }) => {
       if (event == 'SIGNED_OUT') {
         console.log(event);
       } else {
+        console.log(event, session.user);
         localStorage.setItem('authStatus', true);
         setUser(session.user.id);
       }
     });
+    console.log('auth effect');
   }, []);
 
   // Login user
@@ -44,6 +54,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
+      console.log(password);
       if (error) {
         console.log(error);
         alert(error.message);
@@ -67,6 +78,7 @@ export const AuthProvider = ({ children }) => {
       dispatch(currentUsername(username));
       setIsSignedIn(true);
     }
+    console.log(isSignedIn);
   }, []);
 
   // useEffect(()=>{
@@ -82,7 +94,8 @@ export const AuthProvider = ({ children }) => {
     setIsSignedIn(false);
   };
 
-  const handleRegister = async (username, email, password) => {
+  // Register new user
+  const handleRegister = async (username, email, password, avatar) => {
     if (!username || !email || !password) {
       alert('Please Complete All Fields');
     } else {
@@ -97,6 +110,30 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
+      console.log(user);
+      const handleAvatarUpload = async (avatar, user) => {
+        if (avatar && user !== undefined) {
+          const avatarFile = avatar;
+          // const generateFileName = (min, max) => {
+          //   min = Math.ceil(min);
+          //   max = Math.ceil(max);
+          //   return Math.floor(Math.random() * (max - min + 1) + min);
+          // };
+          let fileName = user.id;
+          console.log(fileName);
+          const decodeAvatarFile = decode(avatarFile);
+          console.log(decodeAvatarFile);
+          const { data, error } = await supabase.storage
+            .from('avatars')
+            .upload(`public/${fileName}`, avatarFile, {
+              cacheControl: '3600',
+              upsert: false,
+              contentType: 'image/png',
+            });
+          console.log(error);
+        }
+      };
+      handleAvatarUpload(avatar, user);
       alert('Please check your email for a confirmation link. Thanks!');
       if (error) {
         console.log(error);
@@ -105,10 +142,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const handleResetPassword = async (email) => {
+    const { data, error } = await supabase.auth.api.resetPasswordForEmail(email, {
+      redirectTo: 'https://localhost:3000.com/reset-password',
+    })
+  }
+
   const value = {
     onLogin: handleLogin,
     onLogout: handleLogout,
     onRegister: handleRegister,
+    onResetPassword: handleResetPassword
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

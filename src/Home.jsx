@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import '@fontsource/barlow';
 import {
   ChakraProvider,
   Container,
+  Box,
+  Text,
+  Link,
   VStack,
+  Code,
+  Grid,
   SimpleGrid,
   GridItem,
   useDisclosure,
 } from '@chakra-ui/react';
 import theme from './theme';
-
+import { ColorModeSwitcher } from './helpers/ColorModeSwitcher';
 import { Navbar } from './Navbar';
 import { PostFeed } from './PostFeed';
 import { PostSidebar } from './PostSidebar';
@@ -32,25 +38,27 @@ export const Home = () => {
         <Navbar onOpen={onOpen} />
         <SimpleGrid columns={3} maxChildWidth="35%">
           <GridItem>
-            <Container
-              
-              overflowY={"auto"}
-              css={{
-                '&::-webkit-scrollbar': {
-                  width: '6px',
-                },
-                '&::-webkit-scrollbar-track': {
-                  width: '8px',
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  background: 'slategrey',
-                  borderRadius: '24px',
-                },
-              }}
-            >
-              <VStack overflowX="hidden" overflowY={'auto'}>
+            <Container maxHeight={['100vh', '100vh', 'none', 'none']} overflowY={['auto', 'auto', 'hidden', 'hidden']}     
+            css={{
+          '&::-webkit-scrollbar': {
+            width: '6px', 
+            visibility:'hidden'
+          },
+          '&::-webkit-scrollbar-track': {
+            width: '8px',
+            visibility:'hidden'
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: 'slategrey',
+            borderRadius: '24px',
+            visibility:'hidden'
+          },
+        }} 
+        >
+              <VStack overflowX='hidden' >
                 <PostSidebar />
                 <Container
+                
                   centerContent
                   padding="0"
                   visibility={['visible', 'visible', 'visible', 'hidden']}
@@ -60,44 +68,11 @@ export const Home = () => {
               </VStack>
             </Container>
           </GridItem>
-          
           <GridItem colSpan={['2', '2', '1', '1']}>
-          <Container
-              overflowY={['auto', 'auto', 'auto', 'auto']}
-              css={{
-                '&::-webkit-scrollbar': {
-                  width: '6px',
-                },
-                '&::-webkit-scrollbar-track': {
-                  width: '8px',
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  background: 'slategrey',
-                  borderRadius: '24px',
-                },
-              }}
-            >
             <PostFeed />
-            </Container>
           </GridItem>
           <GridItem visibility={['hidden', 'hidden', 'hidden', 'visible']}>
-            <Container
-              overflowY={['auto', 'auto', 'auto', 'auto']}
-              css={{
-                '&::-webkit-scrollbar': {
-                  width: '6px',
-                },
-                '&::-webkit-scrollbar-track': {
-                  width: '8px',
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  background: 'slategrey',
-                  borderRadius: '24px',
-                },
-              }}
-            >
-              <SocialSidebar />
-            </Container>
+            <SocialSidebar />
           </GridItem>
         </SimpleGrid>
       </Container>

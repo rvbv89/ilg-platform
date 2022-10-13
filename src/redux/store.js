@@ -8,6 +8,7 @@ export default configureStore({
     users: usersReducer,
     posts: postsReducer,
     [supabaseQuery.reducerPath]: supabaseQuery.reducer,
+    //comments obj
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({ serializableCheck: false }).concat(

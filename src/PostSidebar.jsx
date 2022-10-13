@@ -17,6 +17,7 @@ import { currentFeed } from './redux/postsSlice';
 const feedIds = ['general', 'finance', 'technology', 'music'];
 
 export const PostSidebar = () => {
+  // define dispatch var for redux hook
   const dispatch = useDispatch();
 
   return (
@@ -28,7 +29,6 @@ export const PostSidebar = () => {
       marginTop={{ base: '4', lg: '4' }}
       borderRadius={'4px'}
       backgroundColor={'white'}
-     
     >
       <Heading
         fontFamily="body"
@@ -45,7 +45,8 @@ export const PostSidebar = () => {
           {feedIds.map(id => {
             return (
               <Button
-              fontSize={['.85em', '1em', '1em', '1.25em']}
+                key={id}
+                fontSize={['.85em', '1em', '1em', '1.25em']}
                 padding={['2', '4', '4', '4']}
                 value={id}
                 onClick={e => {

@@ -22,7 +22,6 @@ export const postsSlice = createSlice({
     addPostsFromSubscription: (state, action) => {
       return { ...state, allPosts: action.payload };
     },
-    // **TODO**
     deletePost: (state, action) => {
       //delete post for current user
     },

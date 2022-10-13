@@ -1,6 +1,13 @@
-import React, { useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useRef, useState } from 'react';
 import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
   Flex,
   Heading,
   Input,
@@ -13,8 +20,13 @@ import {
   FormControl,
   FormLabel,
   InputRightElement,
+  Divider,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useAuth } from './context/AuthProvider';
+import { UserAvatar } from './UserAvatar';
+import { supabase } from './supabase/init';
+import { once } from '@chakra-ui/utils';
 // import { EmailIcon, LockIcon } from '@chakra-ui/icons';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -22,14 +34,46 @@ export const Register = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const usernameRef = useRef();
+  const avatarRef = useRef();
 
-  const { onRegister } = useAuth();
+  const { onRegister, onAvatarUpload } = useAuth();
 
   const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
-  } = useForm();
+    getDisclosureProps,
+    getButtonProps,
+    onClose,
+    isOpen,
+    onToggle,
+    onOpen,
+  } = useDisclosure();
+  const buttonProps = getButtonProps();
+  const disclosureProps = getDisclosureProps();
+
+  const [avatarVal, setAvatarVal] = useState();
+  const [avatarPreviewVal, setAvatarPreviewVal] = useState()
+  // const [avatarPreviewVal, setAvatarPreviewVal] = useState('');
+  const [toggleLargeAvatar, setToggleLargeAvatar] = useState(false);
+
+  // const handleUploadAvatar = async () => {
+  //   // const avatarFile = e.target.file[0]
+
+  //   if (avatarVal === undefined) {
+  //     window.alert('Please select an image to upload');
+  //   } else {
+  //     const avatarFile = avatarVal;
+  //     const avatarFileExt = avatarFile.name.split('.').pop();
+  //     const avatarFileName = `${Math.random()}.${avatarFileExt}`;
+  //     const avatarFilePath = `${avatarFileName}`;
+  //     const { data, error } = await supabase.storage
+  //       .from('avatars')
+  //       .upload(avatarFilePath, avatarFile, {
+  //         cacheControl: '3600',
+  //         upsert: false,
+  //       });
+  //     console.log('next');
+  //     onClose();
+  //   }
+  // };
 
   return (
     <Flex
@@ -46,7 +90,7 @@ export const Register = () => {
         alignItems="center"
       >
         <Box maxW={{ base: '90%', md: '50em' }}>
-          <form onSubmit={handleSubmit(onRegister)}>
+          <form onSubmit={onRegister}>
             <Stack rounded="md" spacing={4} p="2rem" boxShadow="md">
               <Heading fontSize="2xl" fontWeight="normal">
                 Please enter a valid email, username and password to complete
@@ -105,15 +149,62 @@ export const Register = () => {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
+              <Divider />
+              {/* Optional Avatar Upload */}
+              <span>Upload An Avatar Image (Optional)</span>
+              {toggleLargeAvatar && <UserAvatar avatarPreviewVal={avatarPreviewVal} />}
+              <Popover isOpen={isOpen}>
+                <PopoverTrigger>
+                  <Button onClick={onOpen}>Upload Image</Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverHeader>Select Avatar Image</PopoverHeader>
+                  <PopoverCloseButton onClick={onClose} />
+                  <PopoverBody>
+                    <FormControl>
+                      <InputGroup>
+                        <Input
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          onChange={e => {
+                            const reader = new FileReader();
+                            reader.readAsDataURL(e.target.files[0]);
+                            reader.onload = () => {
+                              console.log(reader.result);
+                              const file = e.target.files[0]
+                              setAvatarPreviewVal(reader.result)
+                              setAvatarVal(file);
+                            };
+                          }}
+                        />
+                        <UserAvatar avatarPreviewVal={avatarPreviewVal} />
+                      </InputGroup>
+                    </FormControl>
+                  </PopoverBody>
+                  <PopoverFooter>
+                    <Button
+                      onClick={() => {
+                        onClose();
+                        setToggleLargeAvatar(true);
+                      }}
+                    >
+                      <i class="fa-solid fa-check"></i>
+                    </Button>
+                  </PopoverFooter>
+                </PopoverContent>
+              </Popover>
+
               <Button
                 onClick={e => {
                   e.preventDefault();
-                  console.log(passwordRef.current.value);
                   onRegister(
                     usernameRef.current?.value,
                     emailRef.current?.value,
-                    passwordRef.current?.value
+                    passwordRef.current?.value,
+                    avatarVal
                   );
+                  // onAvatarUpload(avatarVal)
                 }}
                 borderRadius={6}
                 type="submit"
