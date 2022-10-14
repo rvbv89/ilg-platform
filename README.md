@@ -1,5 +1,5 @@
 # About this project
-This is currently a simple text-based social media site built with React and Supabase.  I'm adding new features when I can. I've just added the ability to upload an avatar. User profiles are probably next, followed by image uploads to the different feeds. However, right now I'm solely focused on improving the post query functions by wrapping the supabase fetch calls in React Query functions.
+This is currently a simple text-based social media site built with React and Supabase.  I'm adding new features when I can. I've just added the ability to upload an avatar. User profiles are probably next, followed by image uploads to the different feeds. However, right now I'm solely focused on optimizing the post queries by wrapping the supabase fetch calls in React Query functions.
 
 # Current Todos
 -Add 3rd party auth options<br />
