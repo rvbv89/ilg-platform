@@ -6,8 +6,7 @@ of its current newbie-friendly abstractions, has been a breeze so far.
 # Current Todos
 -Add 3rd party auth options<br />
 -Add media support<br />
--Add direct chats<br />
--Smooth out UI/customize theme<br />
+-Refactor supabase calls to reside in React Query wrappers
 
 ## Available Scripts
 
