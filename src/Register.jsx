@@ -37,9 +37,9 @@ export const Register = () => {
   // Chakra hooks for avatar popover
   const { onClose, isOpen, onOpen } = useDisclosure();
 
+  // Local state for avatar preview and final vals and toggle avatar preview upon file reading
   const [avatarVal, setAvatarVal] = useState();
   const [avatarPreviewVal, setAvatarPreviewVal] = useState();
-  // const [avatarPreviewVal, setAvatarPreviewVal] = useState('');
   const [toggleLargeAvatar, setToggleLargeAvatar] = useState(false);
 
   return (
