@@ -1,15 +1,11 @@
 import React from 'react';
 import {
-  Flex,
-  Box,
   Container,
-  Text,
   Heading,
   ButtonGroup,
   Button,
   VStack,
   Divider,
-  theme,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import { currentFeed } from './redux/postsSlice';

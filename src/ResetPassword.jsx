@@ -8,7 +8,6 @@ import {
   InputLeftElement,
   Input,
   InputGroup,
-  Divider,
   Button,
   Link,
 } from '@chakra-ui/react';

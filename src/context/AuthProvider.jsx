@@ -1,12 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { supabase } from '../supabase/init';
-import { useDispatch, useSelector } from 'react-redux/es/exports';
+import { useDispatch } from 'react-redux/es/exports';
 import {
   currentUser,
   currentUsername,
   logoutCurrentUser,
 } from '../redux/usersSlice';
+import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux/es/exports';
 import { decode } from 'base64-arraybuffer';
+import useRegisterUser from '../hooks/useRegisterUser';
 
 const AuthContext = React.createContext();
 
@@ -34,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      if (event == 'SIGNED_OUT') {
+      if (event === 'SIGNED_OUT') {
         console.log(event);
       } else {
         console.log(event, session.user);
@@ -96,6 +99,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Register new user
+
   const handleRegister = async (username, email, password, avatar) => {
     if (!username || !email || !password) {
       alert('Please Complete All Fields');
@@ -115,11 +119,6 @@ export const AuthProvider = ({ children }) => {
       const handleAvatarUpload = async (avatar, user) => {
         if (avatar && user !== undefined) {
           const avatarFile = avatar;
-          // const generateFileName = (min, max) => {
-          //   min = Math.ceil(min);
-          //   max = Math.ceil(max);
-          //   return Math.floor(Math.random() * (max - min + 1) + min);
-          // };
           let fileName = user.id;
           console.log(fileName);
           const decodeAvatarFile = decode(avatarFile);
@@ -144,12 +143,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const handleRequestResetPassword = async email => {
-    let { data, error } = await supabase.auth.api.resetPasswordForEmail(
-      email,
-      {
-        redirectTo: 'https://localhost:3000.com/reset-password-form',
-      }
-    );
+    let { data, error } = await supabase.auth.api.resetPasswordForEmail(email, {
+      redirectTo: 'https://localhost:3000.com/reset-password-form',
+    });
   };
 
   const handleResetPassword = async (email, password) => {
@@ -157,7 +153,7 @@ export const AuthProvider = ({ children }) => {
       email: email,
       password: password,
     });
-    setResetEmailVal('')
+    setResetEmailVal('');
   };
 
   const value = {

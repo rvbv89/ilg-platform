@@ -18,62 +18,29 @@ import {
   Box,
   Link,
   FormControl,
-  FormLabel,
   InputRightElement,
   Divider,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useAuth } from './context/AuthProvider';
 import { UserAvatar } from './UserAvatar';
-import { supabase } from './supabase/init';
-import { once } from '@chakra-ui/utils';
-// import { EmailIcon, LockIcon } from '@chakra-ui/icons';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Register = () => {
+  // Local state for user input vals
   const emailRef = useRef();
   const passwordRef = useRef();
   const usernameRef = useRef();
-  const avatarRef = useRef();
 
-  const { onRegister, onAvatarUpload } = useAuth();
+  // User registration handler from Auth context
+  const { onRegister } = useAuth()
 
-  const {
-    getDisclosureProps,
-    getButtonProps,
-    onClose,
-    isOpen,
-    onToggle,
-    onOpen,
-  } = useDisclosure();
-  const buttonProps = getButtonProps();
-  const disclosureProps = getDisclosureProps();
+  // Chakra hooks for avatar popover
+  const { onClose, isOpen, onOpen } = useDisclosure();
 
   const [avatarVal, setAvatarVal] = useState();
-  const [avatarPreviewVal, setAvatarPreviewVal] = useState()
+  const [avatarPreviewVal, setAvatarPreviewVal] = useState();
   // const [avatarPreviewVal, setAvatarPreviewVal] = useState('');
   const [toggleLargeAvatar, setToggleLargeAvatar] = useState(false);
-
-  // const handleUploadAvatar = async () => {
-  //   // const avatarFile = e.target.file[0]
-
-  //   if (avatarVal === undefined) {
-  //     window.alert('Please select an image to upload');
-  //   } else {
-  //     const avatarFile = avatarVal;
-  //     const avatarFileExt = avatarFile.name.split('.').pop();
-  //     const avatarFileName = `${Math.random()}.${avatarFileExt}`;
-  //     const avatarFilePath = `${avatarFileName}`;
-  //     const { data, error } = await supabase.storage
-  //       .from('avatars')
-  //       .upload(avatarFilePath, avatarFile, {
-  //         cacheControl: '3600',
-  //         upsert: false,
-  //       });
-  //     console.log('next');
-  //     onClose();
-  //   }
-  // };
 
   return (
     <Flex
@@ -152,7 +119,9 @@ export const Register = () => {
               <Divider />
               {/* Optional Avatar Upload */}
               <span>Upload An Avatar Image (Optional)</span>
-              {toggleLargeAvatar && <UserAvatar avatarPreviewVal={avatarPreviewVal} />}
+              {toggleLargeAvatar && (
+                <UserAvatar avatarPreviewVal={avatarPreviewVal} />
+              )}
               <Popover isOpen={isOpen}>
                 <PopoverTrigger>
                   <Button onClick={onOpen}>Upload Image</Button>
@@ -172,8 +141,8 @@ export const Register = () => {
                             reader.readAsDataURL(e.target.files[0]);
                             reader.onload = () => {
                               console.log(reader.result);
-                              const file = e.target.files[0]
-                              setAvatarPreviewVal(reader.result)
+                              const file = e.target.files[0];
+                              setAvatarPreviewVal(reader.result);
                               setAvatarVal(file);
                             };
                           }}

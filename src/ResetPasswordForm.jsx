@@ -5,10 +5,8 @@ import {
   Box,
   Heading,
   FormControl,
-  InputLeftElement,
   Input,
   InputGroup,
-  Divider,
   Button,
   Link,
 } from '@chakra-ui/react';
@@ -16,7 +14,7 @@ import { useAuth } from './context/AuthProvider';
 
 export const ResetPasswordForm = () => {
   const passwordRef = useRef();
-  const { onResetPassword, setEmail, email } = useAuth();
+  const { onResetPassword, email } = useAuth();
   return (
     <Flex
       flexDirection="column"

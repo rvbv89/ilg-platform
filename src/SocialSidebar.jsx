@@ -7,6 +7,7 @@ import {
   Container,
   Divider,
   VStack,
+  Button,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux/es/exports';
 
@@ -36,15 +37,13 @@ export const SocialSidebar = () => {
           <>
             <h1 style={{ color: 'slategray', marginBottom: '.5em' }}>You</h1>
             <VStack>
-              <Box
-                borderRadius="5px"
-                backgroundColor="#EDF2F7"
+              <Button
+                fontSize={['.85em', '1em', '1em', '1em']}
                 padding={['2', '4', '4', '4']}
+                size="lg"
               >
-                <span key={username} style={{ fontWeight: 'bold' }}>
-                  {username}
-                </span>
-              </Box>
+                {username}
+              </Button>
             </VStack>
 
             <Divider marginY="1.5" variant="solid" />
@@ -53,15 +52,13 @@ export const SocialSidebar = () => {
               {otherUsers &&
                 otherUsers.map(user => {
                   return (
-                    <Box
-                      borderRadius="5px"
-                      backgroundColor="#EDF2F7"
+                    <Button
+                      fontSize={['.85em', '1em', '1em', '1em']}
                       padding={['2', '4', '4', '4']}
+                      size="lg"
                     >
-                      <span key={username} style={{ fontWeight: 'bold' }}>
-                        {user.username}
-                      </span>
-                    </Box>
+                      {user.username}
+                    </Button>
                   );
                 })}
             </VStack>

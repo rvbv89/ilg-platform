@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -13,14 +13,13 @@ import {
   Input,
   Text,
 } from '@chakra-ui/react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from './context/AuthProvider';
 
 export const AuthModal = ({ isOpen, onClose }) => {
   const { onLogin } = useAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
-
   const initialRef = useRef(null);
   const finalRef = useRef(null);
 

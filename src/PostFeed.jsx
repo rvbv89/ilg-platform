@@ -8,16 +8,10 @@ import {
   PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
-  Portal,
   Input,
-  Flex,
   Box,
-  Text,
   Heading,
   VStack,
-  HStack,
-  Spacer,
   Button,
   Container,
   Modal,
@@ -113,7 +107,7 @@ export const PostFeed = () => {
       backgroundColor={'white'}
       overflowY="hidden"
     >
-      <Heading paddingBottom="4">{`#${currentFeedTitle}`}</Heading>
+      <Heading fontSize="2xl" fontWeight="bold" paddingBottom="4">{`#${currentFeedTitle}`}</Heading>
       <Container
         justifyContent="center"
         overflowY={'auto'}
